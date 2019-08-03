@@ -1,0 +1,603 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EF75310022F52CC700B348EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7530FF22F52CC700B348EB /* AppDelegate.swift */; };
+		EF75310222F52CC700B348EB /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EF75310122F52CC700B348EB /* GameScene.sks */; };
+		EF75310422F52CC700B348EB /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = EF75310322F52CC700B348EB /* Actions.sks */; };
+		EF75310622F52CC700B348EB /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75310522F52CC700B348EB /* GameScene.swift */; };
+		EF75310822F52CC700B348EB /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75310722F52CC700B348EB /* GameViewController.swift */; };
+		EF75310B22F52CC700B348EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF75310922F52CC700B348EB /* Main.storyboard */; };
+		EF75310D22F52CC800B348EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF75310C22F52CC800B348EB /* Assets.xcassets */; };
+		EF75311022F52CC800B348EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF75310E22F52CC800B348EB /* LaunchScreen.storyboard */; };
+		EF75311B22F52CC800B348EB /* Time_TraceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75311A22F52CC800B348EB /* Time_TraceTests.swift */; };
+		EF75312622F52CC800B348EB /* Time_TraceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75312522F52CC800B348EB /* Time_TraceUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EF75311722F52CC800B348EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF7530F422F52CC700B348EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF7530FB22F52CC700B348EB;
+			remoteInfo = "Time Trace";
+		};
+		EF75312222F52CC800B348EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF7530F422F52CC700B348EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF7530FB22F52CC700B348EB;
+			remoteInfo = "Time Trace";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EF7530FC22F52CC700B348EB /* Time Trace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Trace.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF7530FF22F52CC700B348EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EF75310122F52CC700B348EB /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		EF75310322F52CC700B348EB /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		EF75310522F52CC700B348EB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		EF75310722F52CC700B348EB /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		EF75310A22F52CC700B348EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF75310C22F52CC800B348EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EF75310F22F52CC800B348EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EF75311122F52CC800B348EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF75311622F52CC800B348EB /* Time TraceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time TraceTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF75311A22F52CC800B348EB /* Time_TraceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time_TraceTests.swift; sourceTree = "<group>"; };
+		EF75311C22F52CC800B348EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF75312122F52CC800B348EB /* Time TraceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time TraceUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF75312522F52CC800B348EB /* Time_TraceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time_TraceUITests.swift; sourceTree = "<group>"; };
+		EF75312722F52CC800B348EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EF7530F922F52CC700B348EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF75311322F52CC800B348EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF75311E22F52CC800B348EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EF7530F322F52CC700B348EB = {
+			isa = PBXGroup;
+			children = (
+				EF7530FE22F52CC700B348EB /* Time Trace */,
+				EF75311922F52CC800B348EB /* Time TraceTests */,
+				EF75312422F52CC800B348EB /* Time TraceUITests */,
+				EF7530FD22F52CC700B348EB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EF7530FD22F52CC700B348EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF7530FC22F52CC700B348EB /* Time Trace.app */,
+				EF75311622F52CC800B348EB /* Time TraceTests.xctest */,
+				EF75312122F52CC800B348EB /* Time TraceUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EF7530FE22F52CC700B348EB /* Time Trace */ = {
+			isa = PBXGroup;
+			children = (
+				EF7530FF22F52CC700B348EB /* AppDelegate.swift */,
+				EF75310122F52CC700B348EB /* GameScene.sks */,
+				EF75310322F52CC700B348EB /* Actions.sks */,
+				EF75310522F52CC700B348EB /* GameScene.swift */,
+				EF75310722F52CC700B348EB /* GameViewController.swift */,
+				EF75310922F52CC700B348EB /* Main.storyboard */,
+				EF75310C22F52CC800B348EB /* Assets.xcassets */,
+				EF75310E22F52CC800B348EB /* LaunchScreen.storyboard */,
+				EF75311122F52CC800B348EB /* Info.plist */,
+			);
+			path = "Time Trace";
+			sourceTree = "<group>";
+		};
+		EF75311922F52CC800B348EB /* Time TraceTests */ = {
+			isa = PBXGroup;
+			children = (
+				EF75311A22F52CC800B348EB /* Time_TraceTests.swift */,
+				EF75311C22F52CC800B348EB /* Info.plist */,
+			);
+			path = "Time TraceTests";
+			sourceTree = "<group>";
+		};
+		EF75312422F52CC800B348EB /* Time TraceUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EF75312522F52CC800B348EB /* Time_TraceUITests.swift */,
+				EF75312722F52CC800B348EB /* Info.plist */,
+			);
+			path = "Time TraceUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EF7530FB22F52CC700B348EB /* Time Trace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF75312A22F52CC800B348EB /* Build configuration list for PBXNativeTarget "Time Trace" */;
+			buildPhases = (
+				EF7530F822F52CC700B348EB /* Sources */,
+				EF7530F922F52CC700B348EB /* Frameworks */,
+				EF7530FA22F52CC700B348EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Time Trace";
+			productName = "Time Trace";
+			productReference = EF7530FC22F52CC700B348EB /* Time Trace.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EF75311522F52CC800B348EB /* Time TraceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF75312D22F52CC800B348EB /* Build configuration list for PBXNativeTarget "Time TraceTests" */;
+			buildPhases = (
+				EF75311222F52CC800B348EB /* Sources */,
+				EF75311322F52CC800B348EB /* Frameworks */,
+				EF75311422F52CC800B348EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF75311822F52CC800B348EB /* PBXTargetDependency */,
+			);
+			name = "Time TraceTests";
+			productName = "Time TraceTests";
+			productReference = EF75311622F52CC800B348EB /* Time TraceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EF75312022F52CC800B348EB /* Time TraceUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF75313022F52CC800B348EB /* Build configuration list for PBXNativeTarget "Time TraceUITests" */;
+			buildPhases = (
+				EF75311D22F52CC800B348EB /* Sources */,
+				EF75311E22F52CC800B348EB /* Frameworks */,
+				EF75311F22F52CC800B348EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF75312322F52CC800B348EB /* PBXTargetDependency */,
+			);
+			name = "Time TraceUITests";
+			productName = "Time TraceUITests";
+			productReference = EF75312122F52CC800B348EB /* Time TraceUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EF7530F422F52CC700B348EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1030;
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = TTI;
+				TargetAttributes = {
+					EF7530FB22F52CC700B348EB = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					EF75311522F52CC800B348EB = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = EF7530FB22F52CC700B348EB;
+					};
+					EF75312022F52CC800B348EB = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = EF7530FB22F52CC700B348EB;
+					};
+				};
+			};
+			buildConfigurationList = EF7530F722F52CC700B348EB /* Build configuration list for PBXProject "Time Trace" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EF7530F322F52CC700B348EB;
+			productRefGroup = EF7530FD22F52CC700B348EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EF7530FB22F52CC700B348EB /* Time Trace */,
+				EF75311522F52CC800B348EB /* Time TraceTests */,
+				EF75312022F52CC800B348EB /* Time TraceUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EF7530FA22F52CC700B348EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF75310B22F52CC700B348EB /* Main.storyboard in Resources */,
+				EF75310222F52CC700B348EB /* GameScene.sks in Resources */,
+				EF75310D22F52CC800B348EB /* Assets.xcassets in Resources */,
+				EF75311022F52CC800B348EB /* LaunchScreen.storyboard in Resources */,
+				EF75310422F52CC700B348EB /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF75311422F52CC800B348EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF75311F22F52CC800B348EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF7530F822F52CC700B348EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF75310622F52CC700B348EB /* GameScene.swift in Sources */,
+				EF75310822F52CC700B348EB /* GameViewController.swift in Sources */,
+				EF75310022F52CC700B348EB /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF75311222F52CC800B348EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF75311B22F52CC800B348EB /* Time_TraceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF75311D22F52CC800B348EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF75312622F52CC800B348EB /* Time_TraceUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EF75311822F52CC800B348EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF7530FB22F52CC700B348EB /* Time Trace */;
+			targetProxy = EF75311722F52CC800B348EB /* PBXContainerItemProxy */;
+		};
+		EF75312322F52CC800B348EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF7530FB22F52CC700B348EB /* Time Trace */;
+			targetProxy = EF75312222F52CC800B348EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EF75310922F52CC700B348EB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF75310A22F52CC700B348EB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EF75310E22F52CC800B348EB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF75310F22F52CC800B348EB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EF75312822F52CC800B348EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EF75312922F52CC800B348EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EF75312B22F52CC800B348EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QVPZ6GQ7KL;
+				INFOPLIST_FILE = "Time Trace/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tti.Time-Trace";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EF75312C22F52CC800B348EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QVPZ6GQ7KL;
+				INFOPLIST_FILE = "Time Trace/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tti.Time-Trace";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EF75312E22F52CC800B348EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QVPZ6GQ7KL;
+				INFOPLIST_FILE = "Time TraceTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tti.Time-TraceTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Time Trace.app/Time Trace";
+			};
+			name = Debug;
+		};
+		EF75312F22F52CC800B348EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QVPZ6GQ7KL;
+				INFOPLIST_FILE = "Time TraceTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tti.Time-TraceTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Time Trace.app/Time Trace";
+			};
+			name = Release;
+		};
+		EF75313122F52CC800B348EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QVPZ6GQ7KL;
+				INFOPLIST_FILE = "Time TraceUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tti.Time-TraceUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Time Trace";
+			};
+			name = Debug;
+		};
+		EF75313222F52CC800B348EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QVPZ6GQ7KL;
+				INFOPLIST_FILE = "Time TraceUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "tti.Time-TraceUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Time Trace";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EF7530F722F52CC700B348EB /* Build configuration list for PBXProject "Time Trace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF75312822F52CC800B348EB /* Debug */,
+				EF75312922F52CC800B348EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF75312A22F52CC800B348EB /* Build configuration list for PBXNativeTarget "Time Trace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF75312B22F52CC800B348EB /* Debug */,
+				EF75312C22F52CC800B348EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF75312D22F52CC800B348EB /* Build configuration list for PBXNativeTarget "Time TraceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF75312E22F52CC800B348EB /* Debug */,
+				EF75312F22F52CC800B348EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF75313022F52CC800B348EB /* Build configuration list for PBXNativeTarget "Time TraceUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF75313122F52CC800B348EB /* Debug */,
+				EF75313222F52CC800B348EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EF7530F422F52CC700B348EB /* Project object */;
+}
