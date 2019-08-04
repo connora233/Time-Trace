@@ -13,7 +13,6 @@ class GameScene: SKScene {
     
     // Variable declaration
     private var touchDetection : SKShapeNode?
-    
     // Creates a fading circle shape node to track the user's touch movements.
     override func didMove(to view: SKView) {
         self.touchDetection = SKShapeNode.init(circleOfRadius: (self.size.width + self.size.height) * 0.01)
@@ -21,12 +20,13 @@ class GameScene: SKScene {
             circleIndicator.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25),                                                         SKAction.removeFromParent()]))
         }
         
-        let pathLine = SKShapeNode.init(rectOf: CGSize(width: 50, height: 50))
-        pathLine.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-        pathLine.zPosition = 1
-        pathLine.fillColor = SKColor.blue
-        self.addChild(pathLine)
-        
+        let shape = SKShapeNode()
+        shape.path = UIBezierPath(roundedRect: CGRect(x: 50, y: 50, width: 5, height: 10000), cornerRadius: 0).cgPath
+        shape.position = CGPoint(x: frame.midX, y: frame.midY)
+        shape.fillColor = UIColor.white
+        shape.strokeColor = UIColor.white
+        shape.lineWidth = 10
+        addChild(shape)
     }
     
     func touchDown(atPoint pos : CGPoint) {
