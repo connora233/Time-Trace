@@ -13,10 +13,9 @@ class GameScene: SKScene {
     
     // Variable declaration
     private var touchDetection : SKShapeNode?
-    private var currentX : Int = 0
-    private var currentY : Int = 0
-    private var currentHeight : Int = 0
-    private var currentRotation : CGFloat = 0.0
+    private var currentEndPoint : CGPoint = CGPoint(x : 100, y : 100)
+    private var screenWidth : Int = Int(UIScreen.main.bounds.width)
+    private var screenHeight : Int = Int(UIScreen.main.bounds.height)
     
     // Creates a fading circle shape node to track the user's touch movements. Draws a rectangles in a random location on the screen.
     override func didMove(to view: SKView) {
@@ -32,61 +31,31 @@ class GameScene: SKScene {
         
     }
     
-    //Generates the original three rectangles in the first pathway.
+    //Generates the original three lines in the first pathway.
     func pathInitializer(){
-        var points = [CGPoint(x: 500, y: 500), CGPoint(x: 125, y: 100)]
-        drawRect(points: points)
-        /*let degrees = 30.0
-         let radian = CGFloat(degrees * Double.pi / 180)
-         print(radian)
-         drawRect(xCord: Int.random(in: Int(frame.width)/4...Int(frame.width)/2), yCord: Int.random(in:  Int(frame.height)/4...Int(frame.height)/2), height: Int.random(in: 100...300), radians : radian)*/
-        //drawRect(xCord: currentX, yCord: currentY + currentHeight, height: Int.random(in: 0...300))
-        //drawRect(xCord: currentX, yCord: currentY + currentHeight, height: Int.random(in: 0...300))
+        for index in 1...3 {
+        drawLine(points: generateNewLine())
+        }
     }
     
-    //drawRect function that uses CAShapeLayer()
-    func drawRect(points: Array<CGPoint>){
-        var path = CGMutablePath()
+    //Draws a line using CAShapeLayer().
+    func drawLine(points: Array<CGPoint>){
+        currentEndPoint = points[1]
+        let path = CGMutablePath()
         path.move(to:points[0])
-        for pts in points {
-            path.addLine(to: pts)
+        for point in points {
+            path.addLine(to: point)
         }
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path
+        shapeLayer.lineWidth = 20
         shapeLayer.strokeColor = UIColor.red.cgColor
         view?.layer.addSublayer(shapeLayer)
-        //Updates global variables with randomized data from parameters.
-        /*currentRotation = radians
-         currentX = xCord
-         currentY = yCord
-         currentHeight = height
-         
-         //For testing.
-         print(currentX)
-         print(currentY)
-         
-         //Draws a red CAShapeLayer rectangle and rotates it about the z-axis.
-         let layer = CAShapeLayer()
-         layer.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 50, height: height), cornerRadius: 25).cgPath
-         layer.fillColor = UIColor.red.cgColor
-         view?.layer.addSublayer(layer)
-         layer.transform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)
-         
-         //Draws a slightly smaller blue rectangle as a means of testing the rotation axis.
-         let layer1 = CAShapeLayer()
-         layer1.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 20, height: 10), cornerRadius: 25).cgPath
-         layer1.fillColor = UIColor.blue.cgColor
-         view?.layer.addSublayer(layer1)
-         layer1.transform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)*/
     }
     
-    //drawRect function that uses SKShapeNode()
-    func drawRect1(){
-        let shape = SKShapeNode()
-        shape.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 30, height: 100), cornerRadius: 0).cgPath
-        shape.fillColor = UIColor.white
-        shape.strokeColor = UIColor.white
-        addChild(shape)
+    //Generates the coordinates for additional lines using the last existing line's endpoint.
+    func generateNewLine() -> Array<CGPoint> {
+        return [currentEndPoint, CGPoint(x: Int.random(in: 30...screenWidth - 30), y: Int.random(in: 30...screenHeight - 30))]
     }
     
     func touchDown(atPoint pos : CGPoint) {
