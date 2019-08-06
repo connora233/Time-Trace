@@ -28,7 +28,7 @@ class GameScene: SKScene {
     
     //Generates the original three lines in the first pathway.
     func pathInitializer(){
-        for index in 1...3 {
+        for _ in 1...3 {
         drawLine(points: generateNewLine())
         }
     }
@@ -56,10 +56,13 @@ class GameScene: SKScene {
     
     func touchDown(atPoint pos : CGPoint) {
         if let n = self.touchDetection?.copy() as! SKShapeNode? {
+            let returnPoint = pos
             n.position = pos
             n.strokeColor = SKColor.green
             n.fillColor = SKColor.green
             self.addChild(n)
+            
+            print(returnPoint)
         }
     }
     
