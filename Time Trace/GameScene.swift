@@ -34,39 +34,50 @@ class GameScene: SKScene {
     
     //Generates the original three rectangles in the first pathway.
     func pathInitializer(){
-        let degrees = 30.0
-        let radian = CGFloat(degrees * Double.pi / 180)
-        print(radian)
-        drawRect(xCord: Int.random(in: Int(frame.width)/4...Int(frame.width)/2), yCord: Int.random(in:  Int(frame.height)/4...Int(frame.height)/2), height: Int.random(in: 100...300), radians : radian)
+        var points = [CGPoint(x: 500, y: 500), CGPoint(x: 125, y: 100)]
+        drawRect(points: points)
+        /*let degrees = 30.0
+         let radian = CGFloat(degrees * Double.pi / 180)
+         print(radian)
+         drawRect(xCord: Int.random(in: Int(frame.width)/4...Int(frame.width)/2), yCord: Int.random(in:  Int(frame.height)/4...Int(frame.height)/2), height: Int.random(in: 100...300), radians : radian)*/
         //drawRect(xCord: currentX, yCord: currentY + currentHeight, height: Int.random(in: 0...300))
         //drawRect(xCord: currentX, yCord: currentY + currentHeight, height: Int.random(in: 0...300))
     }
     
     //drawRect function that uses CAShapeLayer()
-    func drawRect(xCord : Int, yCord : Int, height : Int, radians : CGFloat){
+    func drawRect(points: Array<CGPoint>){
+        var path = CGMutablePath()
+        path.move(to:points[0])
+        for pts in points {
+            path.addLine(to: pts)
+        }
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path
+        shapeLayer.strokeColor = UIColor.red.cgColor
+        view?.layer.addSublayer(shapeLayer)
         //Updates global variables with randomized data from parameters.
-        currentRotation = radians
-        currentX = xCord
-        currentY = yCord
-        currentHeight = height
-        
-        //For testing.
-        print(currentX)
-        print(currentY)
-        
-        //Draws a red CAShapeLayer rectangle and rotates it about the z-axis.
-        let layer = CAShapeLayer()
-        layer.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 50, height: height), cornerRadius: 25).cgPath
-        layer.fillColor = UIColor.red.cgColor
-        view?.layer.addSublayer(layer)
-        layer.transform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)
-        
-        //Draws a slightly smaller blue rectangle as a means of testing the rotation axis.
-        let layer1 = CAShapeLayer()
-        layer1.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 20, height: 10), cornerRadius: 25).cgPath
-        layer1.fillColor = UIColor.blue.cgColor
-        view?.layer.addSublayer(layer1)
-        layer1.transform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)
+        /*currentRotation = radians
+         currentX = xCord
+         currentY = yCord
+         currentHeight = height
+         
+         //For testing.
+         print(currentX)
+         print(currentY)
+         
+         //Draws a red CAShapeLayer rectangle and rotates it about the z-axis.
+         let layer = CAShapeLayer()
+         layer.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 50, height: height), cornerRadius: 25).cgPath
+         layer.fillColor = UIColor.red.cgColor
+         view?.layer.addSublayer(layer)
+         layer.transform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)
+         
+         //Draws a slightly smaller blue rectangle as a means of testing the rotation axis.
+         let layer1 = CAShapeLayer()
+         layer1.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 20, height: 10), cornerRadius: 25).cgPath
+         layer1.fillColor = UIColor.blue.cgColor
+         view?.layer.addSublayer(layer1)
+         layer1.transform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)*/
     }
     
     //drawRect function that uses SKShapeNode()
