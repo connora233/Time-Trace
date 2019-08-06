@@ -13,7 +13,7 @@ class GameScene: SKScene {
     
     // Variable declaration
     private var touchDetection : SKShapeNode?
-    private var currentEndPoint : CGPoint = CGPoint(x : 100, y : 100)
+    private var currentEndPoint : CGPoint = CGPoint(x : 0, y : 0)
     private var screenWidth : Int = Int(UIScreen.main.bounds.width)
     private var screenHeight : Int = Int(UIScreen.main.bounds.height)
     
@@ -24,11 +24,6 @@ class GameScene: SKScene {
             circleIndicator.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25),                                                         SKAction.removeFromParent()]))
         }
         pathInitializer()
-    }
-    
-    //Function that is called every frame.
-    override func update(_ currentTime: TimeInterval){
-        
     }
     
     //Generates the original three lines in the first pathway.
@@ -46,16 +41,17 @@ class GameScene: SKScene {
         for point in points {
             path.addLine(to: point)
         }
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path
-        shapeLayer.lineWidth = 20
-        shapeLayer.strokeColor = UIColor.red.cgColor
-        view?.layer.addSublayer(shapeLayer)
+        let trace = SKShapeNode()
+        trace.path = path
+        trace.lineWidth = 40
+        trace.lineCap = .round
+        trace.strokeColor = .red
+        self.addChild(trace)
     }
     
     //Generates the coordinates for additional lines using the last existing line's endpoint.
     func generateNewLine() -> Array<CGPoint> {
-        return [currentEndPoint, CGPoint(x: Int.random(in: 30...screenWidth - 30), y: Int.random(in: 30...screenHeight - 30))]
+        return [currentEndPoint, CGPoint(x: Int.random(in: -screenWidth / 2 + 15...screenWidth / 2 - 15), y: Int.random(in: -screenHeight / 2 + 20...screenHeight / 2 - 20))]
     }
     
     func touchDown(atPoint pos : CGPoint) {
