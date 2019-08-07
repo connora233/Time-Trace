@@ -33,7 +33,7 @@ class GameScene: SKScene {
         }
     }
     
-    //Draws a line using CAShapeLayer().
+    //Draws a line using SKShapeNode().
     func drawLine(points: Array<CGPoint>){
         currentEndPoint = points[1]
         let path = CGMutablePath()
