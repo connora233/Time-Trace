@@ -32,33 +32,37 @@ class GameScene: SKScene {
         for _ in 1...3 {
         drawLine(points: generateNewLine())
         }
-        for x in activeLineCoordinates {
-            print("pulling")
-            pullCords(endPoints: x)
-        }
+        
     }
     
-    func pullCords(endPoints: Array<CGPoint>) {
+    //Determines if the location the user is touching is within the bounds of the path.
+    func acceptableDistance(pointArray: Array<CGPoint>, touchCoordinate : CGPoint) -> Bool {
+        var acceptable = true
+        for point in pointArray{
+            let distance = (pow((point.x - touchCoordinate.x), 2) + pow((point.y - touchCoordinate.y), 2)).squareRoot()
+            if distance > 5{
+                acceptable = false
+            }
+        }
+        return acceptable
+    }
+    
+    //Returns an array of one hundred points lying approximately along the center of a path.
+    func pullCords(endPoints: Array<CGPoint>) -> Array<CGPoint>{
         var detectionArray : Array<CGPoint> = []
-        let startX = endPoints[0].x
-        let startY = endPoints[0].y
-        let endX = endPoints[1].x
-        let endY = endPoints[1].y
-        let diffX = endX - startX
-        let diffY = endY - startY
+        let diffX = endPoints[1].x - endPoints[0].x
+        let diffY = endPoints[1].y - endPoints[0].y
         let slope = diffY / diffX
-        print(slope)
-        let smallSlope = slope / 100
-        var currX = startX
-        var currY = startY
-        var count = 1
-        while currX < endX {
+        var currX = endPoints[0].x
+        var currY = endPoints[0].y
+        var count = 0
+        while count < 100 {
             detectionArray.append(CGPoint(x: currX, y: currY))
             currX = currX + (diffX / 100)
-            currY = currY + smallSlope
+            currY = currY + (slope/100)
             count += 1
         }
-        print(count)
+        return detectionArray
     }
     
     //Draws a line using CAShapeLayer().
