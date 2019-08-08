@@ -19,11 +19,11 @@ class GameScene: SKScene {
     
     // Variable declaration for path color changing
     private var colorTracker : Int = 0
-    private var colorArray : Array<UIColor> = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.blue, UIColor.purple]
+    private var colorArray : Array<UIColor> = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
     
     // Variable declaration for the rectangle-in-use's data
-    private var currentStartPoint : CGPoint = CGPoint(x: 0, y: 0)
     private var currentEndPoint : CGPoint = CGPoint(x: 0, y: 0)
+    private var currentStartPoint : CGPoint = CGPoint(x: 0, y: 0)
     private var currentPosition : CGPoint = CGPoint(x: 0, y: 0)
     private var currentAngle : Int = 45
     private var currentHeight : Int = 200
@@ -43,11 +43,10 @@ class GameScene: SKScene {
     
     //Generates the original three rectangles in the first pathway.
     func pathInitializer(){
-        drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
-        drawRect(newPoint: nextCoordinate(oldPoint: currentStartPoint), height: currentHeight, angle: 0)
-        drawRect(newPoint: nextCoordinate(oldPoint: currentStartPoint), height: currentHeight, angle: 0)
-        //drawRect(newPoint: nextCoordinate(oldPoint: currentStartPoint), height: Int.random(in: 300...400), angle: Int.random(in: 0...360))
-
+        drawRect(newPoint: currentStartPoint, height: currentHeight, angle: Int.random(in: 0...360))
+        for _ in 1...2{
+            drawRect(newPoint: nextCoordinate(oldPoint: currentStartPoint), height: Int.random(in: 300...400), angle: Int.random(in: 0...360))
+        }
     }
     
     //Returns the appropriate start coordinate based upon the previous line's data.
@@ -57,22 +56,61 @@ class GameScene: SKScene {
     
     //Draws a rectangular path using SKShapeObject().
     func drawRect(newPoint: CGPoint, height: Int, angle: Int){
+        currentEndPoint = currentStartPoint
+        print("currentEnd")
+        print(currentEndPoint)
         currentStartPoint = newPoint
+        print("currentStart")
+        print(currentStartPoint)
         currentHeight = height
         currentAngle = angle
         let color = changeColor()
         let shape = SKShapeNode()
-        shape.path = UIBezierPath(roundedRect: CGRect(x: currentStartPoint.x, y: currentStartPoint.y, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
+        //Right here we decide where the path will eventually be moved by calling to adjustment()---needs a lot of work I just tried a few ideas but none were very functional
+        shape.position = adjustment(end: currentEndPoint, start: currentStartPoint)
+        print("position")
+        print(shape.position)
+        //Draws the path at 0,0, but the position we already established will "translate it" to the desired position
+        shape.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
         shape.fillColor = color
         shape.strokeColor = color
-        shape.alpha = 0.25
+        shape.alpha = 0.4
         addChild(shape)
         shapeArray.append(shape)
-        if test < 1{
-            let radians = CGFloat.pi * CGFloat(angle) / 180
-            shape.zRotation = CGFloat(radians)
-            test += 1
+        
+        //I tried line 83 as a way of bettering adjustment()--might be more harm than good, not vital to drawRect()
+        currentStartPoint = shape.position
+        
+        //NOTE!!!! All angles are in radians everywhere, but this function takes in degrees. If you try to rotate elsewhere, make sure you're converting
+        let radians = CGFloat.pi * CGFloat(angle) / 180
+        shape.zRotation = CGFloat(radians)
+    }
+    
+    //NEEDS OPTIMIZING!!! Attempts to move the rotated path to the correct position.
+    func adjustment(end: CGPoint, start: CGPoint) -> CGPoint{
+        var xCord = CGFloat(0.0)
+        var yCord = CGFloat(0.0)
+        if currentEndPoint.x < currentStartPoint.x {
+            xCord = currentStartPoint.x + currentWidth/2
         }
+        else if currentEndPoint.x == currentStartPoint.x {
+            xCord = currentStartPoint.x
+        }
+        else{
+            xCord = currentStartPoint.x - currentWidth/2
+        }
+        
+        if currentEndPoint.y < currentStartPoint.y {
+            yCord = currentStartPoint.y - currentWidth/2
+        }
+        else if currentEndPoint.y == currentStartPoint.y {
+            yCord = currentStartPoint.y
+        }
+        else{
+            yCord = currentStartPoint.y + currentWidth/2
+        }
+        return CGPoint(x: xCord, y: yCord)
+
     }
     
     // Returns the next color in colorArray.
