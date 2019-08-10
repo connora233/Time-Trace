@@ -44,8 +44,6 @@ class GameScene: SKScene {
         }
         pathInitializer()
     }
-    
-    // Generates the original three rectangles in the first pathway.
     func pathInitializer(){
         currentAngle = Int.random(in: 0...360)
         drawRect(newPoint: currentStartPoint, height: Int.random(in: 200...400), angle: currentAngle)

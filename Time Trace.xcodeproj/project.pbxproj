@@ -17,6 +17,8 @@
 		EF75311022F52CC800B348EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF75310E22F52CC800B348EB /* LaunchScreen.storyboard */; };
 		EF75311B22F52CC800B348EB /* Time_TraceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75311A22F52CC800B348EB /* Time_TraceTests.swift */; };
 		EF75312622F52CC800B348EB /* Time_TraceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75312522F52CC800B348EB /* Time_TraceUITests.swift */; };
+		EFC8750C22FE75C500A7D8EC /* StartScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EFC8750B22FE75C500A7D8EC /* StartScreen.sks */; };
+		EFC8750E22FE75D300A7D8EC /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8750D22FE75D300A7D8EC /* StartScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		EF75312122F52CC800B348EB /* Time TraceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time TraceUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF75312522F52CC800B348EB /* Time_TraceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time_TraceUITests.swift; sourceTree = "<group>"; };
 		EF75312722F52CC800B348EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFC8750B22FE75C500A7D8EC /* StartScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScreen.sks; sourceTree = "<group>"; };
+		EFC8750D22FE75D300A7D8EC /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +108,10 @@
 			isa = PBXGroup;
 			children = (
 				EF7530FF22F52CC700B348EB /* AppDelegate.swift */,
+				EFC8750B22FE75C500A7D8EC /* StartScreen.sks */,
 				EF75310122F52CC700B348EB /* GameScene.sks */,
 				EF75310322F52CC700B348EB /* Actions.sks */,
+				EFC8750D22FE75D300A7D8EC /* StartScreen.swift */,
 				EF75310522F52CC700B348EB /* GameScene.swift */,
 				EF75310722F52CC700B348EB /* GameViewController.swift */,
 				EF75310922F52CC700B348EB /* Main.storyboard */,
@@ -240,6 +246,7 @@
 			files = (
 				EF75310B22F52CC700B348EB /* Main.storyboard in Resources */,
 				EF75310222F52CC700B348EB /* GameScene.sks in Resources */,
+				EFC8750C22FE75C500A7D8EC /* StartScreen.sks in Resources */,
 				EF75310D22F52CC800B348EB /* Assets.xcassets in Resources */,
 				EF75311022F52CC800B348EB /* LaunchScreen.storyboard in Resources */,
 				EF75310422F52CC700B348EB /* Actions.sks in Resources */,
@@ -269,6 +276,7 @@
 			files = (
 				EF75310622F52CC700B348EB /* GameScene.swift in Sources */,
 				EF75310822F52CC700B348EB /* GameViewController.swift in Sources */,
+				EFC8750E22FE75D300A7D8EC /* StartScreen.swift in Sources */,
 				EF75310022F52CC700B348EB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
