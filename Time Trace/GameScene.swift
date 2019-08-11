@@ -4,7 +4,6 @@
 //
 //  Created by Connor Anderson & Ashley Granitto on 8/2/19.
 //  Copyright © 2019 TTI. All rights reserved.
-//
 
 import SpriteKit
 import GameplayKit
