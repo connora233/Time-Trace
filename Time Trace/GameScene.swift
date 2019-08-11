@@ -14,6 +14,7 @@ class GameScene: SKScene {
     // Variable declaration for general constants
     private var touchDetection : SKShapeNode?
     private var shapeArray : Array<SKShapeNode> = []
+    private var ghostArray : Array<SKShapeNode> = []
     private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
     private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
     
@@ -50,7 +51,7 @@ class GameScene: SKScene {
         print(checkPath(angle: currentAngle, height: currentHeight))
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
         
-        for _ in 1...1{
+        for _ in 1...100{
             addPath()
         }
     }
@@ -61,6 +62,21 @@ class GameScene: SKScene {
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 200...400)
         print(checkPath(angle: currentAngle, height: currentHeight))
+        var screen = false
+        while(!screen){
+            drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
+            if(onScreen(point: nextCoordinateEnd(angle: currentAngle, height: currentHeight))){
+                screen = true
+                ghostArray[0].removeFromParent()
+                ghostArray.remove(at: 0)
+                break
+            }
+            ghostArray[0].removeFromParent()
+            ghostArray.remove(at: 0)
+            currentAngle = Int.random(in: 0...360)
+            currentHeight = Int.random(in: 200...400)
+            print("regen")
+        }
         drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
     }
     
@@ -91,7 +107,6 @@ class GameScene: SKScene {
         let newY = vectorLength * sin(adjustedAngle)
         
         let end1 = CGPoint(x: newX + currentStartPoint.x, y: newY + currentStartPoint.y)
-        
         return end1
     }
     
@@ -139,6 +154,23 @@ class GameScene: SKScene {
         shape.zRotation = CGFloat(radians)
     }
     
+    func drawGhostRect(newPoint: CGPoint, height: Int, angle: Int){
+        currentStartPoint = newPoint
+        currentHeight = height
+        currentAngle = angle
+        
+        let shape = SKShapeNode()
+        shape.position = CGPoint(x: currentStartPoint.x, y: currentStartPoint.y)
+        shape.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
+        shape.fillColor = UIColor.clear
+        shape.strokeColor = UIColor.clear
+        shape.alpha = 0.4
+        addChild(shape)
+        ghostArray.append(shape)
+        let radians = CGFloat.pi * CGFloat(angle) / 180
+        shape.zRotation = CGFloat(radians)
+    }
+    
     // Returns the next color in colorArray.
     func changeColor() -> UIColor {
         let modulus = colorTracker % 6
@@ -152,8 +184,6 @@ class GameScene: SKScene {
             n.strokeColor = SKColor.green
             n.fillColor = SKColor.green
             self.addChild(n)
-            
-            print(pos)
         }
     }
     
