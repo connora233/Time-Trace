@@ -33,6 +33,7 @@ class GameScene: SKScene {
     
     // Variable declaration for pathway alignment
     private var end : CGPoint = CGPoint(x: 0, y: 0)
+    private var previousEnd: CGPoint = CGPoint(x: 0, y: 0)
     private var start : CGPoint = CGPoint(x: 0, y: 0)
     
     // Creates a fading circle shape node to track the user's touch movements. Draws a rectangles in a random location on the screen.
@@ -51,16 +52,17 @@ class GameScene: SKScene {
         currentHeight = Int.random(in: 200...300)
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
         
-        for _ in 1...10{
+        for _ in 1...5{
             addPath()
         }
     }
     
     // Generates additional paths based upon data from prior paths and ensures they remain on the screen
     func addPath() {
+        previousEnd = end
         end = nextCoordinateEnd(angle: currentAngle, height: currentHeight)
         currentAngle = Int.random(in: 0...360)
-        currentHeight = Int.random(in: 200...400)
+        currentHeight = Int.random(in: 300...500)
         var screen = false
         while(!screen){
             drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
@@ -82,13 +84,13 @@ class GameScene: SKScene {
     func onScreen(point: CGPoint) -> Bool {
         let bounds = currentRadius/2 + 10
         if (point.x < (-300 + bounds)) || (point.x > (300 - bounds))  {
-            print("x")
-            print(point.x)
             return false
         }
         if (point.y < (-630 + bounds)) || (point.y > (630 - bounds)) {
-            print("y")
-            print(point.y)
+            return false
+        }
+        if(abs(previousEnd.x - point.x) < 75 || abs(previousEnd.y - point.y) < 150) {
+            print("hit")
             return false
         }
         return true
