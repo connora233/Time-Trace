@@ -45,23 +45,23 @@ class GameScene: SKScene {
         }
         pathInitializer()
     }
+    
+    //Draws initial rectangle and prepares to begin game
     func pathInitializer(){
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 200...300)
-        print(checkPath(angle: currentAngle, height: currentHeight))
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
         
-        for _ in 1...100{
+        for _ in 1...10{
             addPath()
         }
     }
     
-    // Generates additional paths based upon data from prior paths.
+    // Generates additional paths based upon data from prior paths and ensures they remain on the screen
     func addPath() {
         end = nextCoordinateEnd(angle: currentAngle, height: currentHeight)
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 200...400)
-        print(checkPath(angle: currentAngle, height: currentHeight))
         var screen = false
         while(!screen){
             drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
@@ -75,12 +75,11 @@ class GameScene: SKScene {
             ghostArray.remove(at: 0)
             currentAngle = Int.random(in: 0...360)
             currentHeight = Int.random(in: 200...400)
-            print("regen")
         }
         drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
     }
     
-    // FOR TESTING---appears to be functional.
+    // Determines if a point is on the screen
     func onScreen(point: CGPoint) -> Bool {
         let bounds = currentRadius/2 + 10
         if (point.x < (-300 + bounds)) || (point.x > (300 - bounds))  {
@@ -108,14 +107,6 @@ class GameScene: SKScene {
         
         let end1 = CGPoint(x: newX + currentStartPoint.x, y: newY + currentStartPoint.y)
         return end1
-    }
-    
-    //FOR TESTING---not yet working as intended.
-    func checkPath(angle: Int, height: Int) -> Bool {
-        let ender = nextCoordinateEnd(angle: angle, height: height)
-        print("ender")
-        print(ender)
-        return onScreen(point: ender)
     }
     
     // Returns a coordinate that (when used as the position of a newly generated rectangle) lines up the new pathway with the second most-recent pathway.
@@ -232,79 +223,4 @@ class GameScene: SKScene {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
-    
-    // Temporarily moved--workability to be determined in a future edit.
-    /*func inLine() {
-        drawRect(newPoint: currentStartPoint, height: currentHeight, angle: Int.random(in: 0...360))
-        for _ in 1...5{
-            let xB = CGFloat(1)
-            let yB = CGFloat(350)
-            let low = 200
-            let high = 225
-            if next.x >= 0 && next.y >= 0 && next.y <= yB && next.x <= xB{
-                print("q1 c, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 0...180))
-            }
-            else if next.x >= 0 && next.y >= 0 && next.y <= yB && next.x > xB{
-                print("q1 c, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 70...110))
-            }
-            else if next.x >= 0 && next.y >= 0 && next.y > yB && next.x <= xB{
-                print("q1 o, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 90...180))
-            }
-            else if next.x >= 0 && next.y >= 0 && next.y > yB && next.x > xB{
-                print("q1 o, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 120...130))
-            }
-            else if next.x < 0 && next.y >= 0 && next.y <= yB && next.x <= xB{
-                print("q2 c, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 180...360))
-            }
-            else if next.x < 0 && next.y >= 0 && next.y <= yB && next.x > xB{
-                print("q2 c, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 260...280))
-            }
-            else if next.x < 0 && next.y >= 0 && next.y > yB && next.x <= xB{
-                print("q2 o, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 180...270))
-            }
-            else if next.x < 0 && next.y >= 0 && next.y > yB && next.x > xB{
-                print("q2 o, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 220...230))
-            }
-            else if next.x < 0 && next.y < 0 && next.y > -yB && next.x >= -xB{
-                print("q3 c, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 180...360))
-            }
-            else if next.x < 0 && next.y < 0 && next.y > -yB && next.x < -xB{
-                print("q3 c, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 260...280))
-            }
-            else if next.x < 0 && next.y < 0 && next.y <= -yB && next.x >= -xB{
-                print("q3 o, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 270...360))
-            }
-            else if next.x < 0 && next.y < 0 && next.y <= -yB && next.x < -xB{
-                print("q3 o, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 310...320))
-            }
-            else if next.x >= 0 && next.y < 0 && next.y > -yB && next.x >= -xB{
-                print("q4 c, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 0...180))
-            }
-            else if next.x >= 0 && next.y < 0 && next.y > -yB && next.x < -xB{
-                print("q4 c, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 80...100))
-            }
-            else if next.x >= 0 && next.y < 0 && next.y <= -yB && next.x >= -xB{
-                print("q4 o, c")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 0...90))
-            }
-            else if next.x >= 0 && next.y < 0 && next.y <= -yB && next.x < -xB{
-                print("q4 o, o")
-                drawRect(newPoint: next, height: Int.random(in: low...high), angle: Int.random(in: 40...50))
-            }
-        }
-    }*/
 }

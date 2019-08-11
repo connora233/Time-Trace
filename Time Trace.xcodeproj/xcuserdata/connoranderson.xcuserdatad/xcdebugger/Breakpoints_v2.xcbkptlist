@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Time Trace/GameScene.swift"
-            timestampString = "587251742.4928499"
+            timestampString = "587255960.081624"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "nextCoordinateEnd(angle:height:)"
             landmarkType = "7">
          </BreakpointContent>
