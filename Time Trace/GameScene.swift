@@ -14,8 +14,8 @@ class GameScene: SKScene {
     // Variable declaration for general constants
     private var touchDetection : SKShapeNode?
     private var shapeArray : Array<SKShapeNode> = []
-    private var screenWidth : Int = Int(UIScreen.main.bounds.width)
-    private var screenHeight : Int = Int(UIScreen.main.bounds.height)
+    private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
+    private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
     
     // Variable declaration for path color changing
     private var colorTracker : Int = 0
@@ -46,32 +46,61 @@ class GameScene: SKScene {
     }
     func pathInitializer(){
         currentAngle = Int.random(in: 0...360)
-        drawRect(newPoint: currentStartPoint, height: Int.random(in: 200...400), angle: currentAngle)
-        for _ in 1...5{
+        currentHeight = Int.random(in: 200...300)
+        print(checkPath(angle: currentAngle, height: currentHeight))
+        drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
+        
+        for _ in 1...1{
             addPath()
         }
     }
     
     // Generates additional paths based upon data from prior paths.
     func addPath() {
-        let endPoint = nextCoordinateEnd()
+        end = nextCoordinateEnd(angle: currentAngle, height: currentHeight)
         currentAngle = Int.random(in: 0...360)
-        drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: Int.random(in: 200...400), angle: currentAngle)
+        currentHeight = Int.random(in: 200...400)
+        print(checkPath(angle: currentAngle, height: currentHeight))
+        drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
+    }
+    
+    // FOR TESTING---appears to be functional.
+    func onScreen(point: CGPoint) -> Bool {
+        let bounds = currentRadius/2 + 10
+        if (point.x < (-300 + bounds)) || (point.x > (300 - bounds))  {
+            print("x")
+            print(point.x)
+            return false
+        }
+        if (point.y < (-630 + bounds)) || (point.y > (630 - bounds)) {
+            print("y")
+            print(point.y)
+            return false
+        }
+        return true
     }
     
     // Returns a coordinate that can be used by future generated rectangles to align their position to the proper location on the screen.
-    func nextCoordinateEnd() -> CGPoint {
-        let vectorLength = (pow(currentWidth/2, 2) + pow(CGFloat(currentHeight)-currentRadius, 2)).squareRoot()
-        let vectorAngle = atan((CGFloat(currentHeight)-currentRadius) / (currentWidth/2))
-        let angleAddition = (CGFloat(currentAngle) * CGFloat.pi/180)
+    func nextCoordinateEnd(angle: Int, height: Int) -> CGPoint {
+        let vectorLength = (pow(currentWidth/2, 2) + pow(CGFloat(height)-currentRadius, 2)).squareRoot()
+        let vectorAngle = atan((CGFloat(height)-currentRadius) / (currentWidth/2))
+        let angleAddition = (CGFloat(angle) * CGFloat.pi/180)
         let adjustedAngle = vectorAngle + angleAddition
         
         let newX = vectorLength * cos(adjustedAngle)
         let newY = vectorLength * sin(adjustedAngle)
         
-        end = CGPoint(x: newX + currentStartPoint.x, y: newY + currentStartPoint.y)
+        let end1 = CGPoint(x: newX + currentStartPoint.x, y: newY + currentStartPoint.y)
         
-        return end
+        return end1
+    }
+    
+    //FOR TESTING---not yet working as intended.
+    func checkPath(angle: Int, height: Int) -> Bool {
+        let ender = nextCoordinateEnd(angle: angle, height: height)
+        print("ender")
+        print(ender)
+        return onScreen(point: ender)
     }
     
     // Returns a coordinate that (when used as the position of a newly generated rectangle) lines up the new pathway with the second most-recent pathway.
