@@ -10,69 +10,70 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    // Variable declaration for general constants
-    private var touchDetection : SKShapeNode?
-    private var shapeArray : Array<SKShapeNode> = []
-    private var ghostArray : Array<SKShapeNode> = []
+    // Variable declaration for general game constants.
     private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
     private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
     
-    // Variable declaration for path color changing
+    // Variable declaration related to screen objects.
+    private var touchDetection : SKShapeNode?
+    private var shapeArray : Array<SKShapeNode> = []
+    private var ghostArray : Array<SKShapeNode> = []
+    private var circleArray : Array<SKShapeNode> = []
+    
+    // Variable declaration for path color changing.
     private var colorTracker : Int = 0
     private var colorArray : Array<UIColor> = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
     
-    // Variable declaration for the rectangle-in-use's data
-    private var currentCenterEnd : CGPoint = CGPoint(x: 0, y: 0)
+    // Variable declaration for the rectangle-in-use's data.
     private var currentCenterStart : CGPoint = CGPoint(x: 0, y: 0)
     private var currentStartPoint : CGPoint = CGPoint(x: 0, y: 0)
     private var currentPosition : CGPoint = CGPoint(x: 0, y: 0)
     private var currentAngle : Int = 0
     private var currentHeight : Int = 300
-    private var currentWidth : CGFloat = 60
-    private var currentRadius : CGFloat = 30
+    private var currentWidth : CGFloat = 100
+    private var currentRadius : CGFloat = 50
     
-    // Variable declaration for pathway alignment
+    // Variable declaration for pathway alignment.
     private var end : CGPoint = CGPoint(x: 0, y: 0)
     private var previousEnd: CGPoint = CGPoint(x: 0, y: 0)
     private var start : CGPoint = CGPoint(x: 0, y: 0)
     
-    //Variables for game mechanics
+    // Variable declaration for game mechanics.
     private var gameStarted: Bool = false
     private var gameOver: Bool = true
     private var secondTouched: Bool = false
     
-    // Creates a fading circle shape node to track the user's touch movements. Draws a rectangles in a random location on the screen.
+    // Creates a fading circle shape node to track the user's touch movements. Initializes the game set up.
     override func didMove(to view: SKView) {
         backgroundColor = UIColor.white
-        self.touchDetection = SKShapeNode.init(circleOfRadius: (self.size.width + self.size.height) * 0.01)
+        self.touchDetection = SKShapeNode.init(circleOfRadius: (self.size.width + self.size.height) * 0.02)
         if let circleIndicator = self.touchDetection {
             circleIndicator.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25),                                                         SKAction.removeFromParent()]))
         }
-        pathInitializer()
+        gameInitializer()
     }
     
-    //Draws initial rectangle and prepares to begin game
-    func pathInitializer(){
+    // Draws initial three pathways and start-indication circle.
+    func gameInitializer(){
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 200...300)
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
+        drawCircle(center: circleCoordinate())
+        for _ in 1...2{
+            addPath()
+        }
     }
     
-    //Begins game after the user touches the first time
-    func startGame() {
-        addPath()
-    }
-    
-    // Generates additional paths based upon data from prior paths and ensures they remain on the screen
+    // Generates additional paths based upon data from prior paths and ensures they remain on the screen.
     func addPath() {
         previousEnd = end
-        end = nextCoordinateEnd(angle: currentAngle, height: currentHeight)
+        end = prevCoordinateEnd(angle: currentAngle, height: currentHeight)
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 300...500)
         var screen = false
         while(!screen){
             drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
-            if(onScreen(point: nextCoordinateEnd(angle: currentAngle, height: currentHeight))){
+            if(onScreen(point: prevCoordinateEnd(angle: currentAngle, height: currentHeight))){
                 screen = true
                 ghostArray[0].removeFromParent()
                 ghostArray.remove(at: 0)
@@ -86,7 +87,7 @@ class GameScene: SKScene {
         drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
     }
     
-    // Determines if a point is on the screen
+    // Determines if a point is on the screen.
     func onScreen(point: CGPoint) -> Bool {
         let bounds = currentRadius/2 + 10
         if (point.x < (-300 + bounds)) || (point.x > (300 - bounds))  {
@@ -102,7 +103,7 @@ class GameScene: SKScene {
     }
     
     // Returns a coordinate that can be used by future generated rectangles to align their position to the proper location on the screen.
-    func nextCoordinateEnd(angle: Int, height: Int) -> CGPoint {
+    func prevCoordinateEnd(angle: Int, height: Int) -> CGPoint {
         let vectorLength = (pow(currentWidth/2, 2) + pow(CGFloat(height)-currentRadius, 2)).squareRoot()
         let vectorAngle = atan((CGFloat(height)-currentRadius) / (currentWidth/2))
         let angleAddition = (CGFloat(angle) * CGFloat.pi/180)
@@ -130,25 +131,49 @@ class GameScene: SKScene {
         return start
     }
     
-    //Draws a rectangular path using SKShapeObject().
+    // Returns a coordinate that (when used as the position of a newly generated rectangle) lines up the new pathway with the second most-recent pathway.
+    func circleCoordinate() -> CGPoint {
+        let vectorLength = (pow(currentWidth/2, 2) + pow(CGFloat(currentRadius), 2)).squareRoot()
+        let vectorAngle = atan(CGFloat(currentRadius) / (currentWidth/2))
+        let angleAddition = (CGFloat(currentAngle) * CGFloat.pi/180)
+        let adjustedAngle = vectorAngle + angleAddition
+        
+        let newX = vectorLength * cos(adjustedAngle)
+        let newY = vectorLength * sin(adjustedAngle)
+        
+        return CGPoint(x: newX, y: newY)
+    }
+    
+    // Draws a circle using SKShapeObject().
+    func drawCircle(center: CGPoint){
+        let circle = SKShapeNode(circleOfRadius: currentRadius + 25)
+        circle.position = CGPoint(x: center.x, y: center.y)
+        circle.fillColor = UIColor.lightGray
+        circle.strokeColor = UIColor.lightGray
+        circle.alpha = 0.25
+        self.addChild(circle)
+        circleArray.append(circle)
+    }
+    
+    // Draws a rectangular path using SKShapeObject().
     func drawRect(newPoint: CGPoint, height: Int, angle: Int){
         currentStartPoint = newPoint
         currentHeight = height
         currentAngle = angle
         
-        let shape = SKShapeNode()
-        shape.position = CGPoint(x: currentStartPoint.x, y: currentStartPoint.y)
-        shape.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
+        let rectangle = SKShapeNode()
+        rectangle.position = CGPoint(x: currentStartPoint.x, y: currentStartPoint.y)
+        rectangle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
         
         let color = changeColor()
-        shape.fillColor = color
-        shape.strokeColor = color
-        shape.alpha = 0.4
-        addChild(shape)
-        shapeArray.append(shape)
+        rectangle.fillColor = color
+        rectangle.strokeColor = color
+        rectangle.alpha = 0.4
+        addChild(rectangle)
+        shapeArray.append(rectangle)
         
         let radians = CGFloat.pi * CGFloat(angle) / 180
-        shape.zRotation = CGFloat(radians)
+        rectangle.zRotation = CGFloat(radians)
     }
     
     // Helper function used to determine if a rectangle with given characteristics will remain on the screen if drawn as the next pathway.
@@ -179,17 +204,20 @@ class GameScene: SKScene {
     func touchDown(atPoint pos : CGPoint) {
         if let n = self.touchDetection?.copy() as! SKShapeNode? {
             n.position = pos
-            n.strokeColor = SKColor.green
-            n.fillColor = SKColor.green
+            n.strokeColor = SKColor.lightGray
+            n.fillColor = SKColor.lightGray
+            n.alpha = 0.25
             self.addChild(n)
+            print(pos)
         }
     }
     
     func touchMoved(toPoint pos : CGPoint) {
         if let n = self.touchDetection?.copy() as! SKShapeNode? {
             n.position = pos
-            n.strokeColor = SKColor.blue
-            n.fillColor = SKColor.blue
+            n.strokeColor = SKColor.lightGray
+            n.fillColor = SKColor.lightGray
+            n.alpha = 0.25
             self.addChild(n)
         }
     }
@@ -197,18 +225,19 @@ class GameScene: SKScene {
     func touchUp(atPoint pos : CGPoint) {
         if let n = self.touchDetection?.copy() as! SKShapeNode? {
             n.position = pos
-            n.strokeColor = SKColor.red
-            n.fillColor = SKColor.red
+            n.strokeColor = SKColor.lightGray
+            n.fillColor = SKColor.lightGray
+            n.alpha = 0.25
             self.addChild(n)
         }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
+        circleArray[0].removeFromParent()
         if !gameStarted && shapeArray[0].contains(touch.location(in: self)) {
             gameOver = false
             gameStarted = true
-            startGame()
         }
         if !gameOver && shapeArray[1].contains(touch.location(in: self)) {
             secondTouched = true
@@ -223,13 +252,13 @@ class GameScene: SKScene {
             shapeArray.remove(at: 0)
             addPath()
         }
-        var c = 0
+        var count = 0
         for shape in shapeArray {
             if shape.contains(touch.location(in: self)) {
-                c += 1
+                count += 1
             }
         }
-        if gameStarted && c == 0 {
+        if gameStarted && count == 0 {
             removeAllChildren()
         }
         for t in touches { self.touchMoved(toPoint: t.location(in: self)) }

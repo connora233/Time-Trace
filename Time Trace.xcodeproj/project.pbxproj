@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87DD5BF8230127F2001DEA07 /* GameOverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DD5BF7230127F2001DEA07 /* GameOverScreen.swift */; };
 		EF75310022F52CC700B348EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7530FF22F52CC700B348EB /* AppDelegate.swift */; };
 		EF75310222F52CC700B348EB /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EF75310122F52CC700B348EB /* GameScene.sks */; };
 		EF75310422F52CC700B348EB /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = EF75310322F52CC700B348EB /* Actions.sks */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		87DD5BF7230127F2001DEA07 /* GameOverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScreen.swift; sourceTree = "<group>"; };
 		EF7530FC22F52CC700B348EB /* Time Trace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Trace.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF7530FF22F52CC700B348EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF75310122F52CC700B348EB /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				EF75310322F52CC700B348EB /* Actions.sks */,
 				EFC8750D22FE75D300A7D8EC /* StartScreen.swift */,
 				EF75310522F52CC700B348EB /* GameScene.swift */,
+				87DD5BF7230127F2001DEA07 /* GameOverScreen.swift */,
 				EF75310722F52CC700B348EB /* GameViewController.swift */,
 				EF75310922F52CC700B348EB /* Main.storyboard */,
 				EF75310C22F52CC800B348EB /* Assets.xcassets */,
@@ -278,6 +281,7 @@
 				EF75310822F52CC700B348EB /* GameViewController.swift in Sources */,
 				EFC8750E22FE75D300A7D8EC /* StartScreen.swift in Sources */,
 				EF75310022F52CC700B348EB /* AppDelegate.swift in Sources */,
+				87DD5BF8230127F2001DEA07 /* GameOverScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
