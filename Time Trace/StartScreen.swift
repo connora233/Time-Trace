@@ -33,6 +33,7 @@ class StartScreen: SKScene {
     private var currentHeight : Int = 300
     private var currentWidth : CGFloat = 60
     private var currentRadius : CGFloat = 30
+    private var delay : Int = 0
     
     // Variable declaration for pathway alignment
     private var end : CGPoint = CGPoint(x: 0, y: 0)
@@ -232,14 +233,17 @@ class StartScreen: SKScene {
     }
     
     func drawLines() {
-        
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
+        if(delay % 10 == 0) {
             addPath()
             if(shapeArray.count > 3) {
                 shapeArray[0].removeFromParent()
                 shapeArray.remove(at: 0)
             }
+        }
+        delay += 1
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        drawLines()
     }
 }

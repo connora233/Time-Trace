@@ -36,6 +36,11 @@ class GameScene: SKScene {
     private var previousEnd: CGPoint = CGPoint(x: 0, y: 0)
     private var start : CGPoint = CGPoint(x: 0, y: 0)
     
+    //Variables for game mechanics
+    private var gameStarted: Bool = false
+    private var gameOver: Bool = true
+    private var secondTouched: Bool = false
+    
     // Creates a fading circle shape node to track the user's touch movements. Draws a rectangles in a random location on the screen.
     override func didMove(to view: SKView) {
         backgroundColor = UIColor.white
@@ -51,10 +56,11 @@ class GameScene: SKScene {
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 200...300)
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
-        
-        for _ in 1...5{
-            addPath()
-        }
+    }
+    
+    //Begins game after the user touches the first time
+    func startGame() {
+        addPath()
     }
     
     // Generates additional paths based upon data from prior paths and ensures they remain on the screen
@@ -198,25 +204,40 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
-        for shape in shapeArray{
-            if shape.contains(touch.location(in: self)) {
-                print("touched")
-            }
+        if !gameStarted && shapeArray[0].contains(touch.location(in: self)) {
+            gameOver = false
+            gameStarted = true
+            startGame()
+        }
+        if !gameOver && shapeArray[1].contains(touch.location(in: self)) {
+            secondTouched = true
         }
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
-        for shape in shapeArray{
+        if !gameOver && shapeArray[1].contains(touch.location(in: self)) {
+            shapeArray[0].removeFromParent()
+            shapeArray.remove(at: 0)
+            addPath()
+        }
+        var c = 0
+        for shape in shapeArray {
             if shape.contains(touch.location(in: self)) {
-                print("touched")
+                c += 1
             }
+        }
+        if gameStarted && c == 0 {
+            removeAllChildren()
         }
         for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameStarted{
+            removeAllChildren()
+        }
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
