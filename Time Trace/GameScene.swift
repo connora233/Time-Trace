@@ -151,6 +151,7 @@ class GameScene: SKScene {
         shape.zRotation = CGFloat(radians)
     }
     
+    // Helper function used to determine if a rectangle with given characteristics will remain on the screen if drawn as the next pathway.
     func drawGhostRect(newPoint: CGPoint, height: Int, angle: Int){
         currentStartPoint = newPoint
         currentHeight = height
