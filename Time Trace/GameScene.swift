@@ -90,7 +90,6 @@ class GameScene: SKScene {
             return false
         }
         if(abs(previousEnd.x - point.x) < 75 || abs(previousEnd.y - point.y) < 150) {
-            print("hit")
             return false
         }
         return true
