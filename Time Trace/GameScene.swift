@@ -10,12 +10,16 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    //------------------------------------VARIABLE DECLARATION------------------------------------
+    
     // Variable declaration for general game constants.
     private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
     private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
+    private var score : Int = 0
     
     // Variable declaration related to screen objects.
     private var touchDetection : SKShapeNode?
+    private var scoreLabel : SKLabelNode?
     private var shapeArray : Array<SKShapeNode> = []
     private var ghostArray : Array<SKShapeNode> = []
     private var circleArray : Array<SKShapeNode> = []
@@ -25,9 +29,7 @@ class GameScene: SKScene {
     private var colorArray : Array<UIColor> = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
     
     // Variable declaration for the rectangle-in-use's data.
-    private var currentCenterStart : CGPoint = CGPoint(x: 0, y: 0)
     private var currentStartPoint : CGPoint = CGPoint(x: 0, y: 0)
-    private var currentPosition : CGPoint = CGPoint(x: 0, y: 0)
     private var currentAngle : Int = 0
     private var currentHeight : Int = 300
     private var currentWidth : CGFloat = 100
@@ -36,12 +38,13 @@ class GameScene: SKScene {
     // Variable declaration for pathway alignment.
     private var end : CGPoint = CGPoint(x: 0, y: 0)
     private var previousEnd: CGPoint = CGPoint(x: 0, y: 0)
-    private var start : CGPoint = CGPoint(x: 0, y: 0)
     
     // Variable declaration for game mechanics.
     private var gameStarted: Bool = false
     private var gameOver: Bool = true
     private var secondTouched: Bool = false
+    
+    //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
     
     // Creates a fading circle shape node to track the user's touch movements. Initializes the game set up.
     override func didMove(to view: SKView) {
@@ -50,6 +53,7 @@ class GameScene: SKScene {
         if let circleIndicator = self.touchDetection {
             circleIndicator.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25),                                                         SKAction.removeFromParent()]))
         }
+        scoreLabelInitializer()
         gameInitializer()
     }
     
@@ -63,6 +67,23 @@ class GameScene: SKScene {
             addPath()
         }
     }
+    
+    // Initializes the score label.
+    func scoreLabelInitializer(){
+        scoreLabel = SKLabelNode(fontNamed: "Futura Medium")
+        scoreLabel?.text = "0"
+        scoreLabel?.fontSize = 98
+        scoreLabel?.fontColor = UIColor.black
+        scoreLabel?.position = CGPoint(x: 0, y: screenHeight * 0.5)
+        self.addChild(scoreLabel!)
+    }
+    
+    //----------------------------------------SCORE FUCNTIONS----------------------------------------
+    
+    
+    
+    
+    //------------------------------------PATHWAY GENERATION FUCNTIONS------------------------------------
     
     // Generates additional paths based upon data from prior paths and ensures they remain on the screen.
     func addPath() {
@@ -112,8 +133,7 @@ class GameScene: SKScene {
         let newX = vectorLength * cos(adjustedAngle)
         let newY = vectorLength * sin(adjustedAngle)
         
-        let end1 = CGPoint(x: newX + currentStartPoint.x, y: newY + currentStartPoint.y)
-        return end1
+        return CGPoint(x: newX + currentStartPoint.x, y: newY + currentStartPoint.y)
     }
     
     // Returns a coordinate that (when used as the position of a newly generated rectangle) lines up the new pathway with the second most-recent pathway.
@@ -125,11 +145,11 @@ class GameScene: SKScene {
         
         let newX = vectorLength * cos(adjustedAngle)
         let newY = vectorLength * sin(adjustedAngle)
-        
-        start = CGPoint(x: end.x - newX, y: end.y - newY)
        
-        return start
+        return CGPoint(x: end.x - newX, y: end.y - newY)
     }
+    
+    //------------------------------------CIRCLE GENERATION FUCNTION------------------------------------
     
     // Returns a coordinate that (when used as the position of a newly generated rectangle) lines up the new pathway with the second most-recent pathway.
     func circleCoordinate() -> CGPoint {
@@ -143,6 +163,8 @@ class GameScene: SKScene {
         
         return CGPoint(x: newX, y: newY)
     }
+    
+    //---------------------------------------DRAWING FUCNTIONS---------------------------------------
     
     // Draws a circle using SKShapeObject().
     func drawCircle(center: CGPoint){
@@ -181,18 +203,22 @@ class GameScene: SKScene {
         currentStartPoint = newPoint
         currentHeight = height
         currentAngle = angle
+
+        let ghostRec = SKShapeNode()
+        ghostRec.position = CGPoint(x: currentStartPoint.x, y: currentStartPoint.y)
+        ghostRec.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
         
-        let shape = SKShapeNode()
-        shape.position = CGPoint(x: currentStartPoint.x, y: currentStartPoint.y)
-        shape.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
-        shape.fillColor = UIColor.clear
-        shape.strokeColor = UIColor.clear
-        shape.alpha = 0.4
-        addChild(shape)
-        ghostArray.append(shape)
+        ghostRec.fillColor = UIColor.clear
+        ghostRec.strokeColor = UIColor.clear
+        ghostRec.alpha = 0.4
+        addChild(ghostRec)
+        ghostArray.append(ghostRec)
+        
         let radians = CGFloat.pi * CGFloat(angle) / 180
-        shape.zRotation = CGFloat(radians)
+        ghostRec.zRotation = CGFloat(radians)
     }
+    
+    //------------------------------------COLOR-RELATED FUCNTION------------------------------------
     
     // Returns the next color in colorArray.
     func changeColor() -> UIColor {
@@ -201,34 +227,38 @@ class GameScene: SKScene {
         return colorArray[modulus]
     }
     
+    //------------------------------------TOUCH-RELATED FUCNTIONS------------------------------------
+    
+    // Generates a circle to assist the user in location awareness after the user presses down on the screen.
     func touchDown(atPoint pos : CGPoint) {
-        if let n = self.touchDetection?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.lightGray
-            n.fillColor = SKColor.lightGray
-            n.alpha = 0.25
-            self.addChild(n)
-            print(pos)
+        if let touchDownCircle = self.touchDetection?.copy() as! SKShapeNode? {
+            touchDownCircle.position = pos
+            touchDownCircle.strokeColor = SKColor.lightGray
+            touchDownCircle.fillColor = SKColor.lightGray
+            touchDownCircle.alpha = 0.25
+            self.addChild(touchDownCircle)
         }
     }
     
+    // Generates a circle to assist the user in location awareness when the user drags their finger along the screen after pressing down on the screen.
     func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.touchDetection?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.lightGray
-            n.fillColor = SKColor.lightGray
-            n.alpha = 0.25
-            self.addChild(n)
+        if let touchMovedCircle = self.touchDetection?.copy() as! SKShapeNode? {
+            touchMovedCircle.position = pos
+            touchMovedCircle.strokeColor = SKColor.lightGray
+            touchMovedCircle.fillColor = SKColor.lightGray
+            touchMovedCircle.alpha = 0.25
+            self.addChild(touchMovedCircle)
         }
     }
     
+    // Generates a circle to assist the user in location awareness when the user lifts their finger from the screen after previously tapping or dragging along the screen.
     func touchUp(atPoint pos : CGPoint) {
-        if let n = self.touchDetection?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.lightGray
-            n.fillColor = SKColor.lightGray
-            n.alpha = 0.25
-            self.addChild(n)
+        if let touchUpCircle = self.touchDetection?.copy() as! SKShapeNode? {
+            touchUpCircle.position = pos
+            touchUpCircle.strokeColor = SKColor.lightGray
+            touchUpCircle.fillColor = SKColor.lightGray
+            touchUpCircle.alpha = 0.25
+            self.addChild(touchUpCircle)
         }
     }
     
@@ -250,6 +280,8 @@ class GameScene: SKScene {
         if !gameOver && shapeArray[1].contains(touch.location(in: self)) {
             shapeArray[0].removeFromParent()
             shapeArray.remove(at: 0)
+            score += 1
+            scoreLabel?.text = String(score)
             addPath()
         }
         var count = 0
