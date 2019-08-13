@@ -16,11 +16,13 @@ class GameScene: SKScene {
     private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
     private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
     private var score : Int = 0
+    private var count : Int = 0
+    private var clockTrue : Bool = false
     
     // Variable declaration related to screen objects.
     private var touchDetection : SKShapeNode?
     private var scoreLabel : SKLabelNode?
-    private var shapeArray : Array<SKShapeNode> = []
+    private var rectangleArray : Array<SKShapeNode> = []
     private var ghostArray : Array<SKShapeNode> = []
     private var circleArray : Array<SKShapeNode> = []
     
@@ -89,20 +91,7 @@ class GameScene: SKScene {
         end = prevCoordinateEnd(angle: currentAngle, height: currentHeight)
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 300...500)
-        var screen = false
-        while(!screen){
-            drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
-            if(onScreen(point: prevCoordinateEnd(angle: currentAngle, height: currentHeight))){
-                screen = true
-                ghostArray[0].removeFromParent()
-                ghostArray.remove(at: 0)
-                break
-            }
-            ghostArray[0].removeFromParent()
-            ghostArray.remove(at: 0)
-            currentAngle = Int.random(in: 0...360)
-            currentHeight = Int.random(in: 300...500)
-        }
+        findAcceptableRectangle()
         drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
     }
     
@@ -147,6 +136,38 @@ class GameScene: SKScene {
         return CGPoint(x: end.x - newX, y: end.y - newY)
     }
     
+    // Utilizes the concept of "ghost rectangles" to test randomized rectangle characteristics until a rectangle is found that will stay on the screen when connected to the end of the previously drawn pathway.
+    func findAcceptableRectangle() {
+        var screen = false
+        while(!screen){
+            drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
+            if(onScreen(point: prevCoordinateEnd(angle: currentAngle, height: currentHeight))){
+                screen = true
+                ghostArray[0].removeFromParent()
+                ghostArray.remove(at: 0)
+                break
+            }
+            ghostArray[0].removeFromParent()
+            ghostArray.remove(at: 0)
+            currentAngle = Int.random(in: 0...360)
+            currentHeight = Int.random(in: 200...400)
+        }
+    }
+    
+    //------------------------------------TIME OUT FUCNTIONS------------------------------------
+    
+    // Removes rectangles from the array of touchable path objects after they have disolved from the game screen.
+    override func update(_ currentTime: TimeInterval) {
+        if gameStarted && clockTrue{
+            if count != 0 && count % 91 == 0 {
+                rectangleArray.remove(at: 0)
+                print(count)
+                clockTrue = false
+            }
+            count += 1
+        }
+    }
+    
     //------------------------------------CIRCLE GENERATION FUCNTION------------------------------------
     
     // Returns a coordinate that (when used as the position of a newly generated rectangle) lines up the new pathway with the second most-recent pathway.
@@ -188,9 +209,9 @@ class GameScene: SKScene {
         let color = changeColor()
         rectangle.fillColor = color
         rectangle.strokeColor = color
-        rectangle.alpha = 0.4
+        rectangle.alpha = 0.75
         addChild(rectangle)
-        shapeArray.append(rectangle)
+        rectangleArray.append(rectangle)
         
         let radians = CGFloat.pi * CGFloat(angle) / 180
         rectangle.zRotation = CGFloat(radians)
@@ -263,11 +284,13 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         circleArray[0].removeFromParent()
-        if !gameStarted && shapeArray[0].contains(touch.location(in: self)) {
+        if !gameStarted && rectangleArray[0].contains(touch.location(in: self)) {
             gameOver = false
             gameStarted = true
+            clockTrue = true
+            rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: 1.5),                                                         SKAction.removeFromParent()]))
         }
-        if !gameOver && shapeArray[1].contains(touch.location(in: self)) {
+        if !gameOver && rectangleArray[1].contains(touch.location(in: self)) {
             secondTouched = true
         }
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
@@ -275,15 +298,18 @@ class GameScene: SKScene {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
-        if !gameOver && shapeArray[1].contains(touch.location(in: self)) {
-            shapeArray[0].removeFromParent()
-            shapeArray.remove(at: 0)
+        if !gameOver && rectangleArray[1].contains(touch.location(in: self)) {
+            rectangleArray[0].removeFromParent()
+            rectangleArray.remove(at: 0)
+            count = 0
+            clockTrue = true
+            rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: 1.5),                                                         SKAction.removeFromParent()]))
             score += 1
             scoreLabel?.text = String(score)
             addPath()
         }
         var count = 0
-        for shape in shapeArray {
+        for shape in rectangleArray {
             if shape.contains(touch.location(in: self)) {
                 count += 1
             }
