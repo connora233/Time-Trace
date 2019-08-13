@@ -44,6 +44,9 @@ class GameScene: SKScene {
     private var gameOver: Bool = true
     private var secondTouched: Bool = false
     
+    // Variable declaration for changing to GameOverScreen.
+    let gameOverScreen = GameOverScreen(fileNamed: "GameOverScreen")
+    
     //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
     
     // Creates a fading circle shape node to track the user's touch movements. Initializes the game set up.
@@ -77,12 +80,7 @@ class GameScene: SKScene {
         scoreLabel?.position = CGPoint(x: 0, y: screenHeight * 0.5)
         self.addChild(scoreLabel!)
     }
-    
-    //----------------------------------------SCORE FUCNTIONS----------------------------------------
-    
-    
-    
-    
+
     //------------------------------------PATHWAY GENERATION FUCNTIONS------------------------------------
     
     // Generates additional paths based upon data from prior paths and ensures they remain on the screen.
@@ -292,6 +290,9 @@ class GameScene: SKScene {
         }
         if gameStarted && count == 0 {
             removeAllChildren()
+            gameOver = true
+            gameOverScreen!.scaleMode = .aspectFill
+            self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
         }
         for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
@@ -299,6 +300,10 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameStarted{
             removeAllChildren()
+            gameOver = true
+            gameOverScreen!.scaleMode = .aspectFill
+            self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
+            
         }
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
