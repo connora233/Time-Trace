@@ -101,7 +101,7 @@ class GameScene: SKScene {
             ghostArray[0].removeFromParent()
             ghostArray.remove(at: 0)
             currentAngle = Int.random(in: 0...360)
-            currentHeight = Int.random(in: 200...400)
+            currentHeight = Int.random(in: 300...500)
         }
         drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
     }
