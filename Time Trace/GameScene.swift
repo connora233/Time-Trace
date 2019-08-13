@@ -16,8 +16,6 @@ class GameScene: SKScene {
     private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
     private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
     private var score : Int = 0
-    private var count : Int = 0
-    private var clockTrue : Bool = false
     
     // Variable declaration related to screen objects.
     private var touchDetection : SKShapeNode?
@@ -45,6 +43,9 @@ class GameScene: SKScene {
     private var gameStarted: Bool = false
     private var gameOver: Bool = true
     private var secondTouched: Bool = false
+    private var clockTrue : Bool = false
+    private var count : Int = 0
+    private var fadeTimeSec : Double = 1.0
     
     // Variable declaration for changing to GameOverScreen.
     let gameOverScreen = GameOverScreen(fileNamed: "GameOverScreen")
@@ -158,8 +159,9 @@ class GameScene: SKScene {
     
     // Removes rectangles from the array of touchable path objects after they have disolved from the game screen.
     override func update(_ currentTime: TimeInterval) {
+        let fadeTimeMin = fadeTimeSec * 60 + 1
         if gameStarted && clockTrue{
-            if count != 0 && count % 91 == 0 {
+            if count != 0 && count % Int(fadeTimeMin) == 0 {
                 rectangleArray.remove(at: 0)
                 print(count)
                 clockTrue = false
@@ -229,7 +231,7 @@ class GameScene: SKScene {
         
         ghostRec.fillColor = UIColor.clear
         ghostRec.strokeColor = UIColor.clear
-        ghostRec.alpha = 0.4
+        ghostRec.alpha = 0.5
         addChild(ghostRec)
         ghostArray.append(ghostRec)
         
@@ -288,7 +290,7 @@ class GameScene: SKScene {
             gameOver = false
             gameStarted = true
             clockTrue = true
-            rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: 1.5),                                                         SKAction.removeFromParent()]))
+            rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: fadeTimeSec),                                                         SKAction.removeFromParent()]))
         }
         if !gameOver && rectangleArray[1].contains(touch.location(in: self)) {
             secondTouched = true
@@ -303,7 +305,7 @@ class GameScene: SKScene {
             rectangleArray.remove(at: 0)
             count = 0
             clockTrue = true
-            rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: 1.5),                                                         SKAction.removeFromParent()]))
+            rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: fadeTimeSec),                                                         SKAction.removeFromParent()]))
             score += 1
             scoreLabel?.text = String(score)
             addPath()

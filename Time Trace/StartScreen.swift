@@ -170,7 +170,7 @@ class StartScreen: SKScene {
         let color = changeColor()
         rectangle.fillColor = color
         rectangle.strokeColor = color
-        rectangle.alpha = 0.4
+        rectangle.alpha = 0.5
         addChild(rectangle)
         shapeArray.append(rectangle)
         
