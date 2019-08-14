@@ -49,6 +49,8 @@ class GameScene: SKScene {
     private var count : Int = 0
     private var fadeTimeSec : Double = 1.0
     
+    private var colorTheme : String = "RAINBOW"
+    
     // Variable declaration for changing to GameOverScreen.
     let gameOverScreen = GameOverScreen(fileNamed: "GameOverScreen")
     
@@ -56,7 +58,7 @@ class GameScene: SKScene {
     
     // Creates a fading circle shape node to track the user's touch movements. Initializes the game set up.
     override func didMove(to view: SKView) {
-        backgroundColor = UIColor.white
+        adjustTheme()
         self.touchDetection = SKShapeNode.init(circleOfRadius: (self.size.width + self.size.height) * 0.02)
         if let circleIndicator = self.touchDetection {
             circleIndicator.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25),                                                         SKAction.removeFromParent()]))
@@ -84,6 +86,24 @@ class GameScene: SKScene {
         scoreLabel?.fontColor = UIColor.black
         scoreLabel?.position = CGPoint(x: 0, y: screenHeight * 0.5)
         self.addChild(scoreLabel!)
+    }
+    
+    func adjustTheme() {
+        let userDefaults = Foundation.UserDefaults.standard
+        colorTheme = userDefaults.string(forKey: "Theme")!
+        print(colorTheme)
+        if colorTheme == "RAINBOW" {
+            backgroundColor = UIColor.white
+            colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
+        }
+        if colorTheme == "COOL" {
+            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
+            colorArray = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
+        }
+        if colorTheme == "WARM" {
+            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
+            colorArray = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
+        }
     }
 
     //------------------------------------PATHWAY GENERATION FUCNTIONS------------------------------------
@@ -287,8 +307,8 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
-        circleArray[0].removeFromParent()
         if !gameStarted && rectangleArray[0].contains(touch.location(in: self)) {
+            circleArray[0].removeFromParent()
             gameOver = false
             gameStarted = true
             clockTrue = true
@@ -308,6 +328,9 @@ class GameScene: SKScene {
             count = 0
             clockTrue = true
             rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: fadeTimeSec),                                                         SKAction.removeFromParent()]))
+            if fadeTimeSec > 0.6 {
+                fadeTimeSec *= 0.98
+            }
             score += 1
             scoreLabel?.text = String(score)
             addPath()
@@ -319,24 +342,24 @@ class GameScene: SKScene {
             }
         }
         if gameStarted && count == 0 {
-            removeAllChildren()
+            //removeAllChildren()
             gameOver = true
             ended()
             checkHighScore()
             gameOverScreen!.scaleMode = .aspectFill
-            self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
+            self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
         for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameStarted{
-            removeAllChildren()
+            //removeAllChildren()
             gameOver = true
             ended()
             checkHighScore()
             gameOverScreen!.scaleMode = .aspectFill
-            self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
+            self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
             
         }
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }

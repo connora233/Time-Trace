@@ -11,6 +11,9 @@ import GameplayKit
 
 class GameOverScreen: SKScene {
     
+    private var colorTheme : String = "RAINBOW"
+    private var buttonColor : UIColor = UIColor.lightGray
+    
     // Variable for radius of the corner's of rectangles used to make buttons.
     private var currentRadius : CGFloat = 50
     var gameScore : String = ""
@@ -23,7 +26,7 @@ class GameOverScreen: SKScene {
     // Variables to store the different screens to be referrenced when buttons are hit.
     
     override func didMove(to view: SKView) {
-        backgroundColor = UIColor.white
+        adjustTheme()
         let userDefaults = Foundation.UserDefaults.standard
         let currScore = userDefaults.string(forKey: "Score")
         let hScore = userDefaults.string(forKey: "HighScore")
@@ -36,18 +39,35 @@ class GameOverScreen: SKScene {
         
     }
     
+    func adjustTheme() {
+        let userDefaults = Foundation.UserDefaults.standard
+        colorTheme = userDefaults.string(forKey: "Theme")!
+        if colorTheme == "RAINBOW" {
+            backgroundColor = UIColor.white
+            buttonColor = UIColor.lightGray
+        }
+        if colorTheme == "COOL" {
+            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
+            buttonColor = UIColor.white
+        }
+        if colorTheme == "WARM" {
+            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
+            buttonColor = UIColor.white
+        }
+    }
+    
     func menuButtonInitializer() {
         menuButton.path = UIBezierPath(roundedRect: CGRect(x: -150, y: -100, width: 300, height: 150), cornerRadius: currentRadius).cgPath
-        menuButton.fillColor = UIColor.lightGray
-        menuButton.strokeColor = UIColor.lightGray
+        menuButton.fillColor = buttonColor
+        menuButton.strokeColor = buttonColor
         menuButton.alpha = 0.25
         addChild(menuButton)
     }
     
     func newGameButtonInitializer() {
         newGameButton.path = UIBezierPath(roundedRect: CGRect(x: -150, y: -350, width: 300, height: 150), cornerRadius: currentRadius).cgPath
-        newGameButton.fillColor = UIColor.lightGray
-        newGameButton.strokeColor = UIColor.lightGray
+        newGameButton.fillColor = buttonColor
+        newGameButton.strokeColor = buttonColor
         newGameButton.alpha = 0.25
         addChild(newGameButton)
     }
@@ -76,12 +96,12 @@ class GameOverScreen: SKScene {
         if(pos.x > -150 && pos.x < 150 && pos.y > -350 && pos.y < -200) {
             let gameScene = GameScene(fileNamed: "GameScene")
             gameScene!.scaleMode = .aspectFill
-            self.scene?.view?.presentScene(gameScene!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
+            self.scene?.view?.presentScene(gameScene!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
         if(pos.x > -150 && pos.x < 150 && pos.y > -100 && pos.y < 50) {
             let startScreen = StartScreen(fileNamed: "StartScreen")
             startScreen!.scaleMode = .aspectFill
-            self.scene?.view?.presentScene(startScreen!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
+            self.scene?.view?.presentScene(startScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
     }
     

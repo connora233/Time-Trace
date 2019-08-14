@@ -47,16 +47,36 @@ class StartScreen: SKScene {
     private var gameOver: Bool = true
     private var secondTouched: Bool = false
     
+    private var colorTheme : String = "RAINBOW"
+    private var buttonColor : UIColor = UIColor.lightGray
+    
     //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
     
     // Creates a fading circle shape node to track the user's touch movements. Initializes the game set up.
     override func didMove(to view: SKView) {
+        adjustTheme()
+        
         let startButton = SKShapeNode()
-        startButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -250, width: 400, height: 250), cornerRadius: currentRadius).cgPath
-        startButton.fillColor = UIColor.lightGray
-        startButton.strokeColor = UIColor.lightGray
+        startButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -50, width: 400, height: 200), cornerRadius: currentRadius).cgPath
+        startButton.fillColor = buttonColor
+        startButton.strokeColor = buttonColor
         startButton.alpha = 0.25
         addChild(startButton)
+        
+        let settingsButton = SKShapeNode()
+        settingsButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -300, width: 400, height: 200), cornerRadius: currentRadius).cgPath
+        settingsButton.fillColor = buttonColor
+        settingsButton.strokeColor = buttonColor
+        settingsButton.alpha = 0.25
+        addChild(settingsButton)
+        
+        let objectiveButton = SKShapeNode()
+        objectiveButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -550, width: 400, height: 200), cornerRadius: currentRadius).cgPath
+        objectiveButton.fillColor = buttonColor
+        objectiveButton.strokeColor = buttonColor
+        objectiveButton.alpha = 0.25
+        addChild(objectiveButton)
+        
         startScreenInitializer()
     }
     
@@ -67,6 +87,26 @@ class StartScreen: SKScene {
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
         for _ in 1...2{
             addPath()
+        }
+    }
+    
+    func adjustTheme() {
+        let userDefaults = Foundation.UserDefaults.standard
+        colorTheme = userDefaults.string(forKey: "Theme")!
+        if colorTheme == "RAINBOW" {
+            backgroundColor = UIColor.white
+            colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
+            buttonColor = UIColor.lightGray
+        }
+        if colorTheme == "COOL" {
+            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
+            colorArray = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
+            buttonColor = UIColor.white
+        }
+        if colorTheme == "WARM" {
+            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
+            colorArray = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
+            buttonColor = UIColor.white
         }
     }
     
@@ -170,7 +210,7 @@ class StartScreen: SKScene {
         let color = changeColor()
         rectangle.fillColor = color
         rectangle.strokeColor = color
-        rectangle.alpha = 0.5
+        rectangle.alpha = 0.75
         addChild(rectangle)
         shapeArray.append(rectangle)
         
@@ -208,9 +248,21 @@ class StartScreen: SKScene {
     //------------------------------------TOUCH-RELATED FUCNTIONS------------------------------------
     
     func touchDown(atPoint pos : CGPoint) {
-        if(pos.x > -200 && pos.x < 200 && pos.y > -250 && pos.y < 0) {
+        if(pos.x > -200 && pos.x < 200 && pos.y > -50 && pos.y < 150) {
             gameScene!.scaleMode = .aspectFill
-            self.scene?.view?.presentScene(gameScene!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
+            self.scene?.view?.presentScene(gameScene!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
+        }
+        
+        if(pos.x > -200 && pos.x < 200 && pos.y > -300 && pos.y < -100) {
+            let objectiveScreen = ObjectiveScreen(fileNamed: "ObjectiveScreen")
+            objectiveScreen!.scaleMode = .aspectFill
+            self.scene?.view?.presentScene(objectiveScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
+        }
+        
+        if(pos.x > -200 && pos.x < 200 && pos.y > -550 && pos.y < -350) {
+            let settingsScreen = SettingsScreen(fileNamed: "SettingsScreen")
+            settingsScreen!.scaleMode = .aspectFill
+            self.scene?.view?.presentScene(settingsScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
     }
     
