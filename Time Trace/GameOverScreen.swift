@@ -13,23 +13,62 @@ class GameOverScreen: SKScene {
     
     // Variable for radius of the corner's of rectangles used to make buttons.
     private var currentRadius : CGFloat = 50
+    var gameScore : String = ""
+    var highScore : String = ""
+    private var scoreLabel : SKLabelNode?
+    private var highScoreLabel: SKLabelNode?
+    private var menuButton = SKShapeNode()
+    private var newGameButton = SKShapeNode()
     
     // Variables to store the different screens to be referrenced when buttons are hit.
     
     override func didMove(to view: SKView) {
         backgroundColor = UIColor.white
-        let menuButton = SKShapeNode()
-        let newGameButton = SKShapeNode()
+        let userDefaults = Foundation.UserDefaults.standard
+        let currScore = userDefaults.string(forKey: "Score")
+        let hScore = userDefaults.string(forKey: "HighScore")
+        gameScore = currScore!
+        highScore = hScore!
+        menuButtonInitializer()
+        newGameButtonInitializer()
+        scoreLabelInitializer(score: gameScore)
+        highScoreLabelInitializer(highScore: highScore)
+        
+    }
+    
+    func menuButtonInitializer() {
         menuButton.path = UIBezierPath(roundedRect: CGRect(x: -150, y: -100, width: 300, height: 150), cornerRadius: currentRadius).cgPath
-        newGameButton.path = UIBezierPath(roundedRect: CGRect(x: -150, y: -350, width: 300, height: 150), cornerRadius: currentRadius).cgPath
         menuButton.fillColor = UIColor.lightGray
-        newGameButton.fillColor = UIColor.lightGray
         menuButton.strokeColor = UIColor.lightGray
-        newGameButton.strokeColor = UIColor.lightGray
         menuButton.alpha = 0.25
-        newGameButton.alpha = 0.25
         addChild(menuButton)
+    }
+    
+    func newGameButtonInitializer() {
+        newGameButton.path = UIBezierPath(roundedRect: CGRect(x: -150, y: -350, width: 300, height: 150), cornerRadius: currentRadius).cgPath
+        newGameButton.fillColor = UIColor.lightGray
+        newGameButton.strokeColor = UIColor.lightGray
+        newGameButton.alpha = 0.25
         addChild(newGameButton)
+    }
+    
+    // Initializes the score label.
+    func scoreLabelInitializer(score: String){
+        scoreLabel = SKLabelNode(fontNamed: "Futura Medium")
+        scoreLabel?.text = score
+        scoreLabel?.fontSize = 98
+        scoreLabel?.fontColor = UIColor.black
+        scoreLabel?.position = CGPoint(x: 0, y: 400)
+        self.addChild(scoreLabel!)
+    }
+    
+    func highScoreLabelInitializer(highScore: String){
+        highScoreLabel = SKLabelNode(fontNamed: "Futura Medium")
+        highScoreLabel?.text = highScore
+        highScoreLabel?.fontSize = 98
+        highScoreLabel?.fontColor = UIColor.black
+        highScoreLabel?.position = CGPoint(x: 0, y: 150)
+        self.addChild(highScoreLabel!)
     }
     
     //------------------------------------TOUCH-RELATED FUCNTIONS------------------------------------

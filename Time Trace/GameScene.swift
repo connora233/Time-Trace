@@ -16,6 +16,8 @@ class GameScene: SKScene {
     private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
     private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
     private var score : Int = 0
+    private var hScore : Int = 0
+    private var tempScore : String? = ""
     
     // Variable declaration related to screen objects.
     private var touchDetection : SKShapeNode?
@@ -151,7 +153,7 @@ class GameScene: SKScene {
             ghostArray[0].removeFromParent()
             ghostArray.remove(at: 0)
             currentAngle = Int.random(in: 0...360)
-            currentHeight = Int.random(in: 200...400)
+            currentHeight = Int.random(in: 300...500)
         }
     }
     
@@ -319,6 +321,8 @@ class GameScene: SKScene {
         if gameStarted && count == 0 {
             removeAllChildren()
             gameOver = true
+            ended()
+            checkHighScore()
             gameOverScreen!.scaleMode = .aspectFill
             self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
         }
@@ -329,6 +333,8 @@ class GameScene: SKScene {
         if gameStarted{
             removeAllChildren()
             gameOver = true
+            ended()
+            checkHighScore()
             gameOverScreen!.scaleMode = .aspectFill
             self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.flipHorizontal(withDuration: 1.0))
             
@@ -340,5 +346,25 @@ class GameScene: SKScene {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
+    func ended() {
+        let currScore = String(score)
+        let userDefaults = Foundation.UserDefaults.standard
+        userDefaults.set(currScore, forKey: "Score")
+    }
+    
+    func checkHighScore() {
+        let userDefaults = Foundation.UserDefaults.standard
+        let highScore = userDefaults.string(forKey: "HighScore")
+        tempScore = highScore
+        if(tempScore == nil) {
+            hScore = -1
+        }
+        else {
+            hScore = Int(tempScore!)!
+        }
+        if(hScore == -1 || score > hScore) {
+            userDefaults.set(score, forKey: "HighScore")
+        }
+    }
     
 }

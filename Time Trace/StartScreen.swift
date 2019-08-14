@@ -63,7 +63,7 @@ class StartScreen: SKScene {
     // Draws initial three pathways and start-indication circle.
     func startScreenInitializer(){
         currentAngle = Int.random(in: 0...360)
-        currentHeight = Int.random(in: 200...300)
+        currentHeight = Int.random(in: 300...500)
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
         for _ in 1...2{
             addPath()
@@ -79,7 +79,7 @@ class StartScreen: SKScene {
     
     // Generates and controls the speed at which the background animation runs.
     func drawLines() {
-        if(delay % 10 == 0) {
+        if(delay % 15 == 0) {
             addPath()
             if(shapeArray.count > 3) {
                 shapeArray[0].removeFromParent()
@@ -109,7 +109,7 @@ class StartScreen: SKScene {
             ghostArray[0].removeFromParent()
             ghostArray.remove(at: 0)
             currentAngle = Int.random(in: 0...360)
-            currentHeight = Int.random(in: 200...400)
+            currentHeight = Int.random(in: 300...500)
         }
         drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
     }
