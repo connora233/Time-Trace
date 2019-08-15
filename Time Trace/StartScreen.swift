@@ -12,6 +12,7 @@ import GameplayKit
 class StartScreen: SKScene {
     
     let gameScene = GameScene(fileNamed: "GameScene")
+    private var tempTheme : String? = ""
 
     //------------------------------------VARIABLE DECLARATION------------------------------------
     // Variable declaration for general game constants.
@@ -92,7 +93,14 @@ class StartScreen: SKScene {
     
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
-        colorTheme = userDefaults.string(forKey: "Theme")!
+        let cTheme = userDefaults.string(forKey: "Theme")
+        tempTheme = cTheme
+        if(tempTheme == nil) {
+            colorTheme = "RAINBOW"
+        }
+        else {
+            colorTheme = cTheme!
+        }
         if colorTheme == "RAINBOW" {
             backgroundColor = UIColor.white
             colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]

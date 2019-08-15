@@ -12,6 +12,7 @@ import GameplayKit
 class ObjectiveScreen: SKScene {
     
     private var colorTheme : String = "RAINBOW"
+    private var tempTheme : String? = ""
     private var buttonColor : UIColor = UIColor.lightGray
     
     //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
@@ -30,7 +31,14 @@ class ObjectiveScreen: SKScene {
     
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
-        colorTheme = userDefaults.string(forKey: "Theme")!
+        let cTheme = userDefaults.string(forKey: "Theme")
+        tempTheme = cTheme
+        if(tempTheme == nil) {
+            colorTheme = "RAINBOW"
+        }
+        else {
+            colorTheme = cTheme!
+        }
         if colorTheme == "RAINBOW" {
             backgroundColor = UIColor.white
             buttonColor = UIColor.lightGray

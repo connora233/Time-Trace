@@ -336,10 +336,11 @@ class GameScene: SKScene {
             addPath()
         }
         var count = 0
-        for shape in rectangleArray {
-            if shape.contains(touch.location(in: self)) {
-                count += 1
-            }
+        if rectangleArray[0].contains(touch.location(in: self)) {
+            count += 1
+        }
+        if rectangleArray[1].contains(touch.location(in: self)) {
+            count += 1
         }
         if gameStarted && count == 0 {
             //removeAllChildren()
