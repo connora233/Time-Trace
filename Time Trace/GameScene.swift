@@ -185,6 +185,7 @@ class GameScene: SKScene {
         if gameStarted && clockTrue{
             if count != 0 && count % Int(fadeTimeMin) == 0 {
                 rectangleArray.remove(at: 0)
+                gameOver = true
                 print(count)
                 clockTrue = false
             }
