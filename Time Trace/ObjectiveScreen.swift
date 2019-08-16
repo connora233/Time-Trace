@@ -11,8 +11,15 @@ import GameplayKit
 
 class ObjectiveScreen: SKScene {
     
-    private var colorTheme : String = "RAINBOW"
+    //--------------------------------------VARIABLE DECLARATION--------------------------------------
+    
+    // Variable declaration for general game constants.
+    private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
+    private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
+    
+    // Variable declaration for theme implementation.
     private var tempTheme : String? = ""
+    private var colorTheme : String = "RAINBOW"
     private var buttonColor : UIColor = UIColor.lightGray
     
     //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
@@ -26,9 +33,11 @@ class ObjectiveScreen: SKScene {
         returnButton.fillColor = buttonColor
         returnButton.strokeColor = buttonColor
         returnButton.alpha = 0.25
+        
         addChild(returnButton)
     }
     
+    // Adjusts the background and button colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
         let cTheme = userDefaults.string(forKey: "Theme")
@@ -55,8 +64,8 @@ class ObjectiveScreen: SKScene {
     
     // ------------------------------------TOUCH-RELATED FUNCTIONS------------------------------------
     
+    // Transfers the user to the menu screen after the user presses the return button.
     func touchDown(atPoint pos : CGPoint) {
-        
         if(pos.x > -200 && pos.x < 200 && pos.y > -550 && pos.y < -350) {
             let startScreen = StartScreen(fileNamed: "StartScreen")
             startScreen!.scaleMode = .aspectFill
@@ -64,25 +73,8 @@ class ObjectiveScreen: SKScene {
         }
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-    }
-    
+    // Registers the point of contact where the user first touches the screen.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
 }

@@ -49,7 +49,10 @@ class GameScene: SKScene {
     private var count : Int = 0
     private var fadeTimeSec : Double = 1.0
     
+    // Variable declaration for theme implementation.
+    private var tempTheme : String? = ""
     private var colorTheme : String = "RAINBOW"
+    private var circleColor : UIColor = UIColor.lightGray
     
     // Variable declaration for changing to GameOverScreen.
     let gameOverScreen = GameOverScreen(fileNamed: "GameOverScreen")
@@ -88,19 +91,22 @@ class GameScene: SKScene {
         self.addChild(scoreLabel!)
     }
     
+    // Adjusts the background, circle color, and pathway colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
         colorTheme = userDefaults.string(forKey: "Theme")!
-        print(colorTheme)
         if colorTheme == "RAINBOW" {
+            circleColor = UIColor.lightGray
             backgroundColor = UIColor.white
             colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
         }
         if colorTheme == "COOL" {
+            circleColor = UIColor.white
             backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
             colorArray = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
         }
         if colorTheme == "WARM" {
+            circleColor = UIColor.white
             backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
             colorArray = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
         }
@@ -186,11 +192,33 @@ class GameScene: SKScene {
             if count != 0 && count % Int(fadeTimeMin) == 0 {
                 rectangleArray.remove(at: 0)
                 gameOver = true
-                print(count)
                 clockTrue = false
             }
             count += 1
         }
+    }
+    
+    // Checks to see if the user's high score has changed.
+    func checkHighScore() {
+        let userDefaults = Foundation.UserDefaults.standard
+        let highScore = userDefaults.string(forKey: "HighScore")
+        tempScore = highScore
+        if(tempScore == nil) {
+            hScore = -1
+        }
+        else {
+            hScore = Int(tempScore!)!
+        }
+        if(hScore == -1 || score > hScore) {
+            userDefaults.set(score, forKey: "HighScore")
+        }
+    }
+    
+    // Caches the user's score.
+    func ended() {
+        let currScore = String(score)
+        let userDefaults = Foundation.UserDefaults.standard
+        userDefaults.set(currScore, forKey: "Score")
     }
     
     //------------------------------------CIRCLE GENERATION FUCNTION------------------------------------
@@ -214,8 +242,8 @@ class GameScene: SKScene {
     func drawCircle(center: CGPoint){
         let circle = SKShapeNode(circleOfRadius: currentRadius + 25)
         circle.position = CGPoint(x: center.x, y: center.y)
-        circle.fillColor = UIColor.lightGray
-        circle.strokeColor = UIColor.lightGray
+        circle.fillColor = circleColor
+        circle.strokeColor = circleColor
         circle.alpha = 0.25
         self.addChild(circle)
         circleArray.append(circle)
@@ -277,8 +305,8 @@ class GameScene: SKScene {
     func touchDown(atPoint pos : CGPoint) {
         if let touchDownCircle = self.touchDetection?.copy() as! SKShapeNode? {
             touchDownCircle.position = pos
-            touchDownCircle.strokeColor = SKColor.lightGray
-            touchDownCircle.fillColor = SKColor.lightGray
+            touchDownCircle.strokeColor = circleColor
+            touchDownCircle.fillColor = circleColor
             touchDownCircle.alpha = 0.25
             self.addChild(touchDownCircle)
         }
@@ -288,8 +316,8 @@ class GameScene: SKScene {
     func touchMoved(toPoint pos : CGPoint) {
         if let touchMovedCircle = self.touchDetection?.copy() as! SKShapeNode? {
             touchMovedCircle.position = pos
-            touchMovedCircle.strokeColor = SKColor.lightGray
-            touchMovedCircle.fillColor = SKColor.lightGray
+            touchMovedCircle.strokeColor = circleColor
+            touchMovedCircle.fillColor = circleColor
             touchMovedCircle.alpha = 0.25
             self.addChild(touchMovedCircle)
         }
@@ -299,13 +327,14 @@ class GameScene: SKScene {
     func touchUp(atPoint pos : CGPoint) {
         if let touchUpCircle = self.touchDetection?.copy() as! SKShapeNode? {
             touchUpCircle.position = pos
-            touchUpCircle.strokeColor = SKColor.lightGray
-            touchUpCircle.fillColor = SKColor.lightGray
+            touchUpCircle.strokeColor = circleColor
+            touchUpCircle.fillColor = circleColor
             touchUpCircle.alpha = 0.25
             self.addChild(touchUpCircle)
         }
     }
     
+    // Starts the game once the user touches the first rectangle in the pathway.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         if !gameStarted && rectangleArray[0].contains(touch.location(in: self)) {
@@ -321,6 +350,7 @@ class GameScene: SKScene {
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
+    // Ensures the user keeps up with tracing the proper pathway, adding points to the user's score and ending the game when appropriate.
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         if !gameOver && rectangleArray[1].contains(touch.location(in: self)) {
@@ -329,7 +359,7 @@ class GameScene: SKScene {
             count = 0
             clockTrue = true
             rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: fadeTimeSec),                                                         SKAction.removeFromParent()]))
-            if fadeTimeSec > 0.6 {
+            if fadeTimeSec > 0.4 {
                 fadeTimeSec *= 0.98
             }
             score += 1
@@ -344,7 +374,6 @@ class GameScene: SKScene {
             count += 1
         }
         if gameStarted && count == 0 {
-            //removeAllChildren()
             gameOver = true
             ended()
             checkHighScore()
@@ -354,9 +383,9 @@ class GameScene: SKScene {
         for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
     
+    // Ends the game if the user lifts their finger from the screen after the game has started.
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameStarted{
-            //removeAllChildren()
             gameOver = true
             ended()
             checkHighScore()
@@ -367,29 +396,8 @@ class GameScene: SKScene {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
+    // Registers the point the user's finger is at when the game is interrupted. 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
-    
-    func ended() {
-        let currScore = String(score)
-        let userDefaults = Foundation.UserDefaults.standard
-        userDefaults.set(currScore, forKey: "Score")
-    }
-    
-    func checkHighScore() {
-        let userDefaults = Foundation.UserDefaults.standard
-        let highScore = userDefaults.string(forKey: "HighScore")
-        tempScore = highScore
-        if(tempScore == nil) {
-            hScore = -1
-        }
-        else {
-            hScore = Int(tempScore!)!
-        }
-        if(hScore == -1 || score > hScore) {
-            userDefaults.set(score, forKey: "HighScore")
-        }
-    }
-    
 }

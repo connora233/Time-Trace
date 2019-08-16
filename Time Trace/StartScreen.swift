@@ -12,9 +12,9 @@ import GameplayKit
 class StartScreen: SKScene {
     
     let gameScene = GameScene(fileNamed: "GameScene")
-    private var tempTheme : String? = ""
 
     //------------------------------------VARIABLE DECLARATION------------------------------------
+    
     // Variable declaration for general game constants.
     private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
     private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
@@ -48,36 +48,22 @@ class StartScreen: SKScene {
     private var gameOver: Bool = true
     private var secondTouched: Bool = false
     
+    // Variable declaration for theme implementation.
+    private var tempTheme : String? = ""
     private var colorTheme : String = "RAINBOW"
     private var buttonColor : UIColor = UIColor.lightGray
     
+    // Variable declaration for screen initialization.
+    private var yCordArray : Array<CGFloat> = [-50, -300, -550]
+    
     //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
     
-    // Creates a fading circle shape node to track the user's touch movements. Initializes the game set up.
+    // Initializes the game set up.
     override func didMove(to view: SKView) {
         adjustTheme()
-        
-        let startButton = SKShapeNode()
-        startButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -50, width: 400, height: 200), cornerRadius: currentRadius).cgPath
-        startButton.fillColor = buttonColor
-        startButton.strokeColor = buttonColor
-        startButton.alpha = 0.25
-        addChild(startButton)
-        
-        let settingsButton = SKShapeNode()
-        settingsButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -300, width: 400, height: 200), cornerRadius: currentRadius).cgPath
-        settingsButton.fillColor = buttonColor
-        settingsButton.strokeColor = buttonColor
-        settingsButton.alpha = 0.25
-        addChild(settingsButton)
-        
-        let objectiveButton = SKShapeNode()
-        objectiveButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -550, width: 400, height: 200), cornerRadius: currentRadius).cgPath
-        objectiveButton.fillColor = buttonColor
-        objectiveButton.strokeColor = buttonColor
-        objectiveButton.alpha = 0.25
-        addChild(objectiveButton)
-        
+        for yCord in yCordArray {
+            drawButton(yCord: yCord)
+        }
         startScreenInitializer()
     }
     
@@ -91,6 +77,7 @@ class StartScreen: SKScene {
         }
     }
     
+    // Adjusts the background, button colors, and pathway colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
         let cTheme = userDefaults.string(forKey: "Theme")
@@ -145,20 +132,7 @@ class StartScreen: SKScene {
         end = prevCoordinateEnd(angle: currentAngle, height: currentHeight)
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 300...500)
-        var screen = false
-        while(!screen){
-            drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
-            if(onScreen(point: prevCoordinateEnd(angle: currentAngle, height: currentHeight))){
-                screen = true
-                ghostArray[0].removeFromParent()
-                ghostArray.remove(at: 0)
-                break
-            }
-            ghostArray[0].removeFromParent()
-            ghostArray.remove(at: 0)
-            currentAngle = Int.random(in: 0...360)
-            currentHeight = Int.random(in: 300...500)
-        }
+        findAcceptableRectangle()
         drawRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
     }
     
@@ -203,6 +177,24 @@ class StartScreen: SKScene {
         return CGPoint(x: end.x - newX, y: end.y - newY)
     }
     
+    // Utilizes the concept of "ghost rectangles" to test randomized rectangle characteristics until a rectangle is found that will stay on the screen when connected to the end of the previously drawn pathway.
+    func findAcceptableRectangle() {
+        var screen = false
+        while(!screen){
+            drawGhostRect(newPoint: nextCoordinateStart(currentAngle: currentAngle), height: currentHeight, angle: currentAngle)
+            if(onScreen(point: prevCoordinateEnd(angle: currentAngle, height: currentHeight))){
+                screen = true
+                ghostArray[0].removeFromParent()
+                ghostArray.remove(at: 0)
+                break
+            }
+            ghostArray[0].removeFromParent()
+            ghostArray.remove(at: 0)
+            currentAngle = Int.random(in: 0...360)
+            currentHeight = Int.random(in: 300...500)
+        }
+    }
+    
     //---------------------------------------DRAWING FUCNTIONS---------------------------------------
     
     // Draws a rectangular path using SKShapeObject().
@@ -244,6 +236,16 @@ class StartScreen: SKScene {
         shape.zRotation = CGFloat(radians)
     }
     
+    // Draws a pre-stylized button at a specified y-coordinate. 
+    func drawButton(yCord: CGFloat){
+        let button = SKShapeNode()
+        button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: yCord, width: 400, height: 200), cornerRadius: currentRadius).cgPath
+        button.fillColor = buttonColor
+        button.strokeColor = buttonColor
+        button.alpha = 0.25
+        addChild(button)
+    }
+    
     //------------------------------------COLOR-RELATED FUCNTION------------------------------------
     
     // Returns the next color in colorArray.
@@ -255,18 +257,17 @@ class StartScreen: SKScene {
     
     //------------------------------------TOUCH-RELATED FUCNTIONS------------------------------------
     
+    // Transfers the user to the proper screen after the user presses a button.
     func touchDown(atPoint pos : CGPoint) {
         if(pos.x > -200 && pos.x < 200 && pos.y > -50 && pos.y < 150) {
             gameScene!.scaleMode = .aspectFill
             self.scene?.view?.presentScene(gameScene!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
-        
         if(pos.x > -200 && pos.x < 200 && pos.y > -300 && pos.y < -100) {
             let objectiveScreen = ObjectiveScreen(fileNamed: "ObjectiveScreen")
             objectiveScreen!.scaleMode = .aspectFill
             self.scene?.view?.presentScene(objectiveScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
-        
         if(pos.x > -200 && pos.x < 200 && pos.y > -550 && pos.y < -350) {
             let settingsScreen = SettingsScreen(fileNamed: "SettingsScreen")
             settingsScreen!.scaleMode = .aspectFill
@@ -274,25 +275,8 @@ class StartScreen: SKScene {
         }
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-    }
-    
+    // Registers the point of contact where the user first touches the screen. 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
 }

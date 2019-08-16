@@ -11,45 +11,47 @@ import GameplayKit
 
 class SettingsScreen: SKScene {
     
-    private var colorTheme : String = "RAINBOW"
+    //--------------------------------------VARIABLE DECLARATION--------------------------------------
+    
+    // Variable declaration for general game constants.
+    private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
+    private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
+    
+    // Variable declaration for theme implementation.
     private var tempTheme : String? = ""
+    private var colorTheme : String = "RAINBOW"
+    private var colorArrayCounter : Int = 0
+    private var colorArray1 : Array<UIColor> = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
+    private var colorArray2 : Array<UIColor> = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
+    private var colorArray3 : Array<UIColor> = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
+    
+    // Variable declaration for button-related visuals.
+    private var buttonPress : Int = 0
+    private var buttonPressTracker : Int = 0
     private var buttonColor : UIColor = UIColor.lightGray
+    private var buttonPressColor : UIColor = UIColor.darkGray
+    private var buttonArray : Array<SKShapeNode> = []
+    
+    // Variable declaration for screen initialization.
+    private var buttonStatsCordArray : Array<Array<Int>> = [[300, 100], [0, 100], [-300, 100], [-550, 200]]
+    private var xCordColor : Array<CGFloat> = [-200, -133.33, -66.66, 0, 66.66, 133.33]
+    private var yCordColor : Array<CGFloat> = [425, 125, -175]
     
     //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
     
     // Creates a fading circle shape node to track the user's touch movements. Initializes the game set up.
     override func didMove(to view: SKView) {
         adjustTheme()
-        
-        let returnButton = SKShapeNode()
-        returnButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -550, width: 400, height: 200), cornerRadius: 30).cgPath
-        returnButton.fillColor = UIColor.lightGray
-        returnButton.strokeColor = UIColor.lightGray
-        returnButton.alpha = 0.25
-        addChild(returnButton)
-        
-        let option1Button = SKShapeNode()
-        option1Button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: 300, width: 400, height: 100), cornerRadius: 30).cgPath
-        option1Button.fillColor = UIColor.lightGray
-        option1Button.strokeColor = UIColor.lightGray
-        option1Button.alpha = 0.25
-        addChild(option1Button)
-        
-        let option2Button = SKShapeNode()
-        option2Button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: 0, width: 400, height: 100), cornerRadius: 30).cgPath
-        option2Button.fillColor = UIColor.lightGray
-        option2Button.strokeColor = UIColor.lightGray
-        option2Button.alpha = 0.25
-        addChild(option2Button)
-        
-        let option3Button = SKShapeNode()
-        option3Button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -300, width: 400, height: 100), cornerRadius: 30).cgPath
-        option3Button.fillColor = UIColor.lightGray
-        option3Button.strokeColor = UIColor.lightGray
-        option3Button.alpha = 0.25
-        addChild(option3Button)
+        buttonReset()
+        var count = 0
+        let colorArray = [colorArray1, colorArray2, colorArray3]
+        for yCord in yCordColor{
+            drawColorSamples(yCord: yCord, colors: colorArray[count])
+            count += 1
+        }
     }
     
+    // Adjusts the highlighted button based upon the selected theme.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
         let cTheme = userDefaults.string(forKey: "Theme")
@@ -61,71 +63,97 @@ class SettingsScreen: SKScene {
             colorTheme = cTheme!
         }
         if colorTheme == "RAINBOW" {
-            backgroundColor = UIColor.white
-            buttonColor = UIColor.lightGray
+            buttonPress = 0
         }
         if colorTheme == "COOL" {
-            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
-            buttonColor = UIColor.white
+            buttonPress = 1
         }
         if colorTheme == "WARM" {
-            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
-            buttonColor = UIColor.white
+            buttonPress = 2
+        }
+    }
+    
+    //---------------------------------------DRAWING FUCNTIONS---------------------------------------
+    
+    // Draws a pre-stylized button at a specified y-coordinate. Highlights the selected theme button.
+    func drawButton(stats: Array<Int>){
+        let button = SKShapeNode()
+        button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: stats[0], width: 400, height: stats[1]), cornerRadius: 30).cgPath
+        if buttonPress == buttonPressTracker{
+            button.fillColor = buttonPressColor
+            button.strokeColor = buttonPressColor
+            button.alpha = 0.75
+        }
+        else {
+            button.fillColor = buttonColor
+            button.strokeColor = buttonColor
+            button.alpha = 0.25
+        }
+        addChild(button)
+        buttonArray.append(button)
+    }
+    
+    // Draws a selection of the pathway color options for each theme.
+    func drawColorSamples(yCord: CGFloat, colors: Array<UIColor>){
+        var count = 0
+        for xCord in xCordColor{
+            let color = SKShapeNode()
+            color.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 66.67, height: 66.67), cornerRadius: 33.33).cgPath
+            color.fillColor = colors[count]
+            color.strokeColor = colors[count]
+            color.alpha = 0.75
+            count += 1
+            addChild(color)
+        }
+    }
+    
+    // Resets buttonArray in preperation to redraw the buttons to adjust for new selected themes.
+    func buttonReset(){
+        for button in buttonArray {
+            button.removeFromParent()
+        }
+        buttonPressTracker = 0
+        for stats in buttonStatsCordArray{
+            drawButton(stats: stats)
+            buttonPressTracker += 1
         }
     }
     
     // ------------------------------------TOUCH-RELATED FUNCTIONS------------------------------------
     
+    // Transfers the user to the menu screen after the user presses the return button. Registers the new theme after the user selects a theme option.
     func touchDown(atPoint pos : CGPoint) {
-        
         if(pos.x > -200 && pos.x < 200 && pos.y > -550 && pos.y < -350) {
             let startScreen = StartScreen(fileNamed: "StartScreen")
             startScreen!.scaleMode = .aspectFill
             self.scene?.view?.presentScene(startScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
-        
         if(pos.x > -200 && pos.x < 200 && pos.y > 300 && pos.y < 400) {
+            buttonPress = 0
+            buttonReset()
             let colorTheme = "RAINBOW"
-            backgroundColor = UIColor.white
             let userDefaults = Foundation.UserDefaults.standard
             userDefaults.set(colorTheme, forKey: "Theme")
         }
-        
         if(pos.x > -200 && pos.x < 200 && pos.y > 0 && pos.y < 100) {
+            buttonPress = 1
+            buttonReset()
             let colorTheme = "COOL"
-            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
             let userDefaults = Foundation.UserDefaults.standard
             userDefaults.set(colorTheme, forKey: "Theme")
         }
-        
         if(pos.x > -200 && pos.x < 200 && pos.y > -300 && pos.y < -200) {
+            buttonPress = 2
+            buttonReset()
             let colorTheme = "WARM"
-            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
             let userDefaults = Foundation.UserDefaults.standard
             userDefaults.set(colorTheme, forKey: "Theme")
         }
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-    }
-    
+    // Registers the point of contact where the user first touches the screen.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
 }
 

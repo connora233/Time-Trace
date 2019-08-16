@@ -11,19 +11,28 @@ import GameplayKit
 
 class GameOverScreen: SKScene {
     
+    //--------------------------------------VARIABLE DECLARATION--------------------------------------
+    
+    // Variable declaration for general game constants.
+    private var screenWidth : CGFloat = CGFloat(UIScreen.main.bounds.width)
+    private var screenHeight : CGFloat = CGFloat(UIScreen.main.bounds.height)
+    
+    // Variable declaration for theme implementation.
+    private var tempTheme : String? = ""
     private var colorTheme : String = "RAINBOW"
     private var buttonColor : UIColor = UIColor.lightGray
     
-    // Variable for radius of the corner's of rectangles used to make buttons.
+    // Variable declaration for initialization.
     private var currentRadius : CGFloat = 50
     var gameScore : String = ""
     var highScore : String = ""
     private var scoreLabel : SKLabelNode?
     private var highScoreLabel: SKLabelNode?
-    private var menuButton = SKShapeNode()
-    private var newGameButton = SKShapeNode()
     
-    // Variables to store the different screens to be referrenced when buttons are hit.
+    // Variable declaration for screen initialization.
+    private var yCordArray : Array<CGFloat> = [-300, -550]
+    
+    //------------------------------------INITIALIZATION FUCNTIONS------------------------------------
     
     override func didMove(to view: SKView) {
         adjustTheme()
@@ -32,13 +41,14 @@ class GameOverScreen: SKScene {
         let hScore = userDefaults.string(forKey: "HighScore")
         gameScore = currScore!
         highScore = hScore!
-        menuButtonInitializer()
-        newGameButtonInitializer()
+        for yCord in yCordArray {
+            drawButton(yCord: yCord)
+        }
         scoreLabelInitializer(score: gameScore)
         highScoreLabelInitializer(highScore: highScore)
-        
     }
     
+    // Adjusts the background and button colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
         colorTheme = userDefaults.string(forKey: "Theme")!
@@ -56,22 +66,6 @@ class GameOverScreen: SKScene {
         }
     }
     
-    func menuButtonInitializer() {
-        menuButton.path = UIBezierPath(roundedRect: CGRect(x: -150, y: -100, width: 300, height: 150), cornerRadius: currentRadius).cgPath
-        menuButton.fillColor = buttonColor
-        menuButton.strokeColor = buttonColor
-        menuButton.alpha = 0.25
-        addChild(menuButton)
-    }
-    
-    func newGameButtonInitializer() {
-        newGameButton.path = UIBezierPath(roundedRect: CGRect(x: -150, y: -350, width: 300, height: 150), cornerRadius: currentRadius).cgPath
-        newGameButton.fillColor = buttonColor
-        newGameButton.strokeColor = buttonColor
-        newGameButton.alpha = 0.25
-        addChild(newGameButton)
-    }
-    
     // Initializes the score label.
     func scoreLabelInitializer(score: String){
         scoreLabel = SKLabelNode(fontNamed: "Futura Medium")
@@ -82,6 +76,7 @@ class GameOverScreen: SKScene {
         self.addChild(scoreLabel!)
     }
     
+    // Initializes the high score label.
     func highScoreLabelInitializer(highScore: String){
         highScoreLabel = SKLabelNode(fontNamed: "Futura Medium")
         highScoreLabel?.text = highScore
@@ -91,40 +86,37 @@ class GameOverScreen: SKScene {
         self.addChild(highScoreLabel!)
     }
     
+    //---------------------------------------DRAWING FUCNTIONS---------------------------------------
+    
+    // Draws a pre-stylized button at a specified y-coordinate.
+    func drawButton(yCord: CGFloat){
+        let button = SKShapeNode()
+        button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: yCord, width: 400, height: 200), cornerRadius: currentRadius).cgPath
+        button.fillColor = buttonColor
+        button.strokeColor = buttonColor
+        button.alpha = 0.25
+        addChild(button)
+    }
+    
     //------------------------------------TOUCH-RELATED FUCNTIONS------------------------------------
+    
+    // Transfers the user to the proper screen after the user presses a button.
     func touchDown(atPoint pos : CGPoint) {
-        if(pos.x > -150 && pos.x < 150 && pos.y > -350 && pos.y < -200) {
-            let gameScene = GameScene(fileNamed: "GameScene")
+        if(pos.x > -200 && pos.x < 200 && pos.y > -300 && pos.y < -100) {
+            let gameScene = ObjectiveScreen(fileNamed: "GameScene")
             gameScene!.scaleMode = .aspectFill
             self.scene?.view?.presentScene(gameScene!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
-        if(pos.x > -150 && pos.x < 150 && pos.y > -100 && pos.y < 50) {
-            let startScreen = StartScreen(fileNamed: "StartScreen")
+        
+        if(pos.x > -200 && pos.x < 200 && pos.y > -550 && pos.y < -350) {
+            let startScreen = SettingsScreen(fileNamed: "StartScreen")
             startScreen!.scaleMode = .aspectFill
             self.scene?.view?.presentScene(startScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
         }
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-    }
-    
+    // Registers the point of contact where the user first touches the screen.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
 }
