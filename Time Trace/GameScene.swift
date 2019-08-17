@@ -412,8 +412,15 @@ class GameScene: SKScene {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
-    // Registers the point the user's finger is at when the game is interrupted. 
+    // Registers the point the user's finger is at when the game is interrupted and ends the game automatically.
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if(gameOver == false) {
+            gameOver = true
+            ended()
+            checkHighScore()
+            gameOverScreen!.scaleMode = .aspectFill
+            self.scene?.view?.presentScene(gameOverScreen!, transition: SKTransition.fade(with: UIColor.white, duration: 0.75))
+        }
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
 }
