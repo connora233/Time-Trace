@@ -83,6 +83,7 @@ class StartScreen: SKScene {
         tempTheme = userDefaults.string(forKey: "Theme")
         if(tempTheme == nil) {
             colorTheme = "RAINBOW"
+            backgroundColor = UIColor(red: 0.6667, green: 0.9529, blue: 1, alpha: 1.0)
         }
         else {
             colorTheme = tempTheme!

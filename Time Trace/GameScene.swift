@@ -96,9 +96,10 @@ class GameScene: SKScene {
     // Adjusts the background, circle color, and pathway colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
-        tempTheme = userDefaults.string(forKey: "Theme")!
+        tempTheme = userDefaults.string(forKey: "Theme")
         if(tempTheme == nil) {
             colorTheme = "RAINBOW"
+            backgroundColor = UIColor(red: 0.6667, green: 0.9529, blue: 1, alpha: 1.0)
         }
         else {
             colorTheme = tempTheme!
