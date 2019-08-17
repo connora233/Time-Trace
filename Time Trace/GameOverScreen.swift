@@ -66,7 +66,7 @@ class GameOverScreen: SKScene {
             addChild(background)
             buttonColor = UIColor.lightGray
         }
-        if colorTheme == "COOL" {
+        if colorTheme == "SPACE" {
             let background = SKSpriteNode(imageNamed: "space")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
@@ -74,7 +74,7 @@ class GameOverScreen: SKScene {
             addChild(background)
             buttonColor = UIColor.white
         }
-        if colorTheme == "WARM" {
+        if colorTheme == "SUNSET" {
             let background = SKSpriteNode(imageNamed: "sunset")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0

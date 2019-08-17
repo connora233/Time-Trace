@@ -22,8 +22,8 @@ class SettingsScreen: SKScene {
     private var colorTheme : String = "RAINBOW"
     private var colorArrayCounter : Int = 0
     private var colorArray1 : Array<UIColor> = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
-    private var colorArray2 : Array<UIColor> = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
-    private var colorArray3 : Array<UIColor> = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
+    private var colorArray2 : Array<UIColor> = [UIColor(red: 0, green: 0.3961, blue: 0.6, alpha: 1.0), UIColor(red: 0, green: 0.4549, blue: 0.4784, alpha: 1.0), UIColor.white, UIColor(red: 0.8235, green: 0.7176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.6, green: 0.3176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.4235, green: 0.0078, blue: 0.9686, alpha: 1.0)]
+    private var colorArray3 : Array<UIColor> = [UIColor(red: 0, green: 0.5804, blue: 0.698, alpha: 1.0), UIColor(red: 0, green: 0.7176, blue: 0.8784, alpha: 1.0), UIColor(red: 0.9294, green: 0.451, blue: 0.4157, alpha: 1.0), UIColor(red: 0.9373, green: 0.702, blue: 0.1098, alpha: 1.0), UIColor(red: 0.9373, green: 0.8588, blue: 0.3451, alpha: 1.0), UIColor(red: 0.9765, green: 0.9412, blue: 0.4392, alpha: 1.0)]
     
     // Variable declaration for button-related visuals.
     private var buttonPress : Int = 0
@@ -65,10 +65,10 @@ class SettingsScreen: SKScene {
         if colorTheme == "RAINBOW" {
             buttonPress = 0
         }
-        if colorTheme == "COOL" {
+        if colorTheme == "SPACE" {
             buttonPress = 1
         }
-        if colorTheme == "WARM" {
+        if colorTheme == "SUNSET" {
             buttonPress = 2
         }
     }
@@ -100,7 +100,7 @@ class SettingsScreen: SKScene {
             let color = SKShapeNode()
             color.path = UIBezierPath(roundedRect: CGRect(x: xCord, y: yCord, width: 66.67, height: 66.67), cornerRadius: 33.33).cgPath
             color.fillColor = colors[count]
-            color.strokeColor = colors[count]
+            color.strokeColor = UIColor.lightGray
             color.alpha = 0.75
             count += 1
             addChild(color)
@@ -138,14 +138,14 @@ class SettingsScreen: SKScene {
         if(pos.x > -200 && pos.x < 200 && pos.y > 0 && pos.y < 100) {
             buttonPress = 1
             buttonReset()
-            let colorTheme = "COOL"
+            let colorTheme = "SPACE"
             let userDefaults = Foundation.UserDefaults.standard
             userDefaults.set(colorTheme, forKey: "Theme")
         }
         if(pos.x > -200 && pos.x < 200 && pos.y > -300 && pos.y < -200) {
             buttonPress = 2
             buttonReset()
-            let colorTheme = "WARM"
+            let colorTheme = "SUNSET"
             let userDefaults = Foundation.UserDefaults.standard
             userDefaults.set(colorTheme, forKey: "Theme")
         }

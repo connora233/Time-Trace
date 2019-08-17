@@ -96,22 +96,22 @@ class StartScreen: SKScene {
             colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
             buttonColor = UIColor.lightGray
         }
-        if colorTheme == "COOL" {
+        if colorTheme == "SPACE" {
             let background = SKSpriteNode(imageNamed: "space")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
             addChild(background)
-            colorArray = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
+            colorArray = [UIColor(red: 0, green: 0.3961, blue: 0.6, alpha: 1.0), UIColor(red: 0, green: 0.4549, blue: 0.4784, alpha: 1.0), UIColor.white, UIColor(red: 0.8235, green: 0.7176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.6, green: 0.3176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.4235, green: 0.0078, blue: 0.9686, alpha: 1.0)]
             buttonColor = UIColor.white
         }
-        if colorTheme == "WARM" {
+        if colorTheme == "SUNSET" {
             let background = SKSpriteNode(imageNamed: "sunset")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
             addChild(background)
-            colorArray = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
+            colorArray = [UIColor(red: 0, green: 0.5804, blue: 0.698, alpha: 1.0), UIColor(red: 0, green: 0.7176, blue: 0.8784, alpha: 1.0), UIColor(red: 0.9294, green: 0.451, blue: 0.4157, alpha: 1.0), UIColor(red: 0.9373, green: 0.702, blue: 0.1098, alpha: 1.0), UIColor(red: 0.9373, green: 0.8588, blue: 0.3451, alpha: 1.0), UIColor(red: 0.9765, green: 0.9412, blue: 0.4392, alpha: 1.0)]
             buttonColor = UIColor.white
         }
     }
