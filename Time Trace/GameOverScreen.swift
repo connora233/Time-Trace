@@ -51,17 +51,35 @@ class GameOverScreen: SKScene {
     // Adjusts the background and button colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
-        colorTheme = userDefaults.string(forKey: "Theme")!
+        tempTheme = userDefaults.string(forKey: "Theme")
+        if(tempTheme == nil) {
+            colorTheme = "RAINBOW"
+        }
+        else {
+            colorTheme = tempTheme!
+        }
         if colorTheme == "RAINBOW" {
-            backgroundColor = UIColor.white
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             buttonColor = UIColor.lightGray
         }
         if colorTheme == "COOL" {
-            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             buttonColor = UIColor.white
         }
         if colorTheme == "WARM" {
-            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             buttonColor = UIColor.white
         }
     }
@@ -73,6 +91,7 @@ class GameOverScreen: SKScene {
         scoreLabel?.fontSize = 98
         scoreLabel?.fontColor = UIColor.black
         scoreLabel?.position = CGPoint(x: 0, y: 400)
+        scoreLabel?.zPosition = 1
         self.addChild(scoreLabel!)
     }
     
@@ -83,6 +102,7 @@ class GameOverScreen: SKScene {
         highScoreLabel?.fontSize = 98
         highScoreLabel?.fontColor = UIColor.black
         highScoreLabel?.position = CGPoint(x: 0, y: 150)
+        highScoreLabel?.zPosition = 1
         self.addChild(highScoreLabel!)
     }
     
@@ -92,6 +112,7 @@ class GameOverScreen: SKScene {
     func drawButton(yCord: CGFloat){
         let button = SKShapeNode()
         button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: yCord, width: 400, height: 200), cornerRadius: currentRadius).cgPath
+        button.zPosition = 1
         button.fillColor = buttonColor
         button.strokeColor = buttonColor
         button.alpha = 0.25

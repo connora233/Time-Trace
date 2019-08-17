@@ -64,6 +64,7 @@ class GameScene: SKScene {
         adjustTheme()
         self.touchDetection = SKShapeNode.init(circleOfRadius: (self.size.width + self.size.height) * 0.02)
         if let circleIndicator = self.touchDetection {
+            circleIndicator.zPosition = 1
             circleIndicator.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25),                                                         SKAction.removeFromParent()]))
         }
         scoreLabelInitializer()
@@ -88,26 +89,45 @@ class GameScene: SKScene {
         scoreLabel?.fontSize = 98
         scoreLabel?.fontColor = UIColor.black
         scoreLabel?.position = CGPoint(x: 0, y: screenHeight * 0.5)
+        scoreLabel?.zPosition = 1
         self.addChild(scoreLabel!)
     }
     
     // Adjusts the background, circle color, and pathway colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
-        colorTheme = userDefaults.string(forKey: "Theme")!
+        tempTheme = userDefaults.string(forKey: "Theme")!
+        if(tempTheme == nil) {
+            colorTheme = "RAINBOW"
+        }
+        else {
+            colorTheme = tempTheme!
+        }
         if colorTheme == "RAINBOW" {
             circleColor = UIColor.lightGray
-            backgroundColor = UIColor.white
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
         }
         if colorTheme == "COOL" {
             circleColor = UIColor.white
-            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             colorArray = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
         }
         if colorTheme == "WARM" {
             circleColor = UIColor.white
-            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             colorArray = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
         }
     }
@@ -242,6 +262,7 @@ class GameScene: SKScene {
     func drawCircle(center: CGPoint){
         let circle = SKShapeNode(circleOfRadius: currentRadius + 25)
         circle.position = CGPoint(x: center.x, y: center.y)
+        circle.zPosition = 1
         circle.fillColor = circleColor
         circle.strokeColor = circleColor
         circle.alpha = 0.25
@@ -257,6 +278,7 @@ class GameScene: SKScene {
         
         let rectangle = SKShapeNode()
         rectangle.position = CGPoint(x: currentStartPoint.x, y: currentStartPoint.y)
+        rectangle.zPosition = 1
         rectangle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
         
         let color = changeColor()

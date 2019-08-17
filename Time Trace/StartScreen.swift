@@ -80,26 +80,37 @@ class StartScreen: SKScene {
     // Adjusts the background, button colors, and pathway colors based upon the theme selected in the settings.
     func adjustTheme() {
         let userDefaults = Foundation.UserDefaults.standard
-        let cTheme = userDefaults.string(forKey: "Theme")
-        tempTheme = cTheme
+        tempTheme = userDefaults.string(forKey: "Theme")
         if(tempTheme == nil) {
             colorTheme = "RAINBOW"
         }
         else {
-            colorTheme = cTheme!
+            colorTheme = tempTheme!
         }
         if colorTheme == "RAINBOW" {
-            backgroundColor = UIColor.white
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
             buttonColor = UIColor.lightGray
         }
         if colorTheme == "COOL" {
-            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             colorArray = [UIColor(red: 0.0941, green: 0, blue: 0.4392, alpha: 1.0), UIColor.purple, UIColor.blue, UIColor(red: 0, green: 0.9176, blue: 0.9686, alpha: 1.0), UIColor.green, UIColor(red: 0.0471, green: 0.498, blue: 0, alpha: 1.0)]
             buttonColor = UIColor.white
         }
         if colorTheme == "WARM" {
-            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             colorArray = [UIColor.red, UIColor(red: 0.7765, green: 0, blue: 0.2431, alpha: 1.0), UIColor.orange, UIColor(red: 0.9686, green: 0.7412, blue: 0, alpha: 1.0), UIColor.yellow, UIColor(red: 0.9765, green: 0.898, blue: 0, alpha: 0.75)]
             buttonColor = UIColor.white
         }
@@ -205,6 +216,7 @@ class StartScreen: SKScene {
         
         let rectangle = SKShapeNode()
         rectangle.position = CGPoint(x: currentStartPoint.x, y: currentStartPoint.y)
+        rectangle.zPosition = 1
         rectangle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: currentWidth, height: CGFloat(currentHeight)), cornerRadius: currentRadius).cgPath
         
         let color = changeColor()
@@ -240,6 +252,7 @@ class StartScreen: SKScene {
     func drawButton(yCord: CGFloat){
         let button = SKShapeNode()
         button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: yCord, width: 400, height: 200), cornerRadius: currentRadius).cgPath
+        button.zPosition = 1
         button.fillColor = buttonColor
         button.strokeColor = buttonColor
         button.alpha = 0.25

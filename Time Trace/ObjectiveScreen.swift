@@ -30,6 +30,7 @@ class ObjectiveScreen: SKScene {
         
         let returnButton = SKShapeNode()
         returnButton.path = UIBezierPath(roundedRect: CGRect(x: -200, y: -550, width: 400, height: 200), cornerRadius: 30).cgPath
+        returnButton.zPosition = 1
         returnButton.fillColor = buttonColor
         returnButton.strokeColor = buttonColor
         returnButton.alpha = 0.25
@@ -49,15 +50,27 @@ class ObjectiveScreen: SKScene {
             colorTheme = cTheme!
         }
         if colorTheme == "RAINBOW" {
-            backgroundColor = UIColor.white
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             buttonColor = UIColor.lightGray
         }
         if colorTheme == "COOL" {
-            backgroundColor = UIColor(red: 0, green: 0.6588, blue: 0.9882, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             buttonColor = UIColor.white
         }
         if colorTheme == "WARM" {
-            backgroundColor = UIColor(red: 0.9373, green: 0.6706, blue: 0, alpha: 1.0)
+            let background = SKSpriteNode(imageNamed: "map")
+            background.position = CGPoint(x: 0, y: 0)
+            background.zPosition = 0
+            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
+            addChild(background)
             buttonColor = UIColor.white
         }
     }
