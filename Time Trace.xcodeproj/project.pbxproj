@@ -21,11 +21,7 @@
 		EF75311022F52CC800B348EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF75310E22F52CC800B348EB /* LaunchScreen.storyboard */; };
 		EF75311B22F52CC800B348EB /* Time_TraceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75311A22F52CC800B348EB /* Time_TraceTests.swift */; };
 		EF75312622F52CC800B348EB /* Time_TraceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75312522F52CC800B348EB /* Time_TraceUITests.swift */; };
-		EFB34104230776F4003D8180 /* map.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFB34103230776F4003D8180 /* map.jpg */; };
-		EFB3410C23078C8D003D8180 /* sunset.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFB3410B23078C8D003D8180 /* sunset.jpg */; };
-		EFB3411A23079327003D8180 /* simple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFB3411923079327003D8180 /* simple.jpg */; };
-		EFB3411D23079955003D8180 /* sunset.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFB3411B23079955003D8180 /* sunset.jpg */; };
-		EFB3411E23079955003D8180 /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFB3411C23079955003D8180 /* space.jpg */; };
+		EFB34120230799B7003D8180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFB3411F230799B6003D8180 /* Assets.xcassets */; };
 		EFC8750C22FE75C500A7D8EC /* StartScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EFC8750B22FE75C500A7D8EC /* StartScreen.sks */; };
 		EFC8750E22FE75D300A7D8EC /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8750D22FE75D300A7D8EC /* StartScreen.swift */; };
 		EFDB5524230239CB00AAD9B3 /* GameOverScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EFDB5523230239CB00AAD9B3 /* GameOverScreen.sks */; };
@@ -69,11 +65,7 @@
 		EF75312122F52CC800B348EB /* Time TraceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time TraceUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF75312522F52CC800B348EB /* Time_TraceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time_TraceUITests.swift; sourceTree = "<group>"; };
 		EF75312722F52CC800B348EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFB34103230776F4003D8180 /* map.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = map.jpg; path = ../../../map.jpg; sourceTree = "<group>"; };
-		EFB3410B23078C8D003D8180 /* sunset.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sunset.jpg; path = ../../../sunset.jpg; sourceTree = "<group>"; };
-		EFB3411923079327003D8180 /* simple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = simple.jpg; path = ../../../simple.jpg; sourceTree = "<group>"; };
-		EFB3411B23079955003D8180 /* sunset.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sunset.jpg; path = ../../../sunset.jpg; sourceTree = "<group>"; };
-		EFB3411C23079955003D8180 /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = space.jpg; path = ../../../space.jpg; sourceTree = "<group>"; };
+		EFB3411F230799B6003D8180 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFC8750B22FE75C500A7D8EC /* StartScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScreen.sks; sourceTree = "<group>"; };
 		EFC8750D22FE75D300A7D8EC /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
 		EFDB5523230239CB00AAD9B3 /* GameOverScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScreen.sks; sourceTree = "<group>"; };
@@ -137,17 +129,13 @@
 				87A996D523045C2C0024DF22 /* SettingsScreen.sks */,
 				EF75310122F52CC700B348EB /* GameScene.sks */,
 				EFDB5523230239CB00AAD9B3 /* GameOverScreen.sks */,
-				EFB3411923079327003D8180 /* simple.jpg */,
-				EFB3411C23079955003D8180 /* space.jpg */,
-				EFB3411B23079955003D8180 /* sunset.jpg */,
-				EFB34103230776F4003D8180 /* map.jpg */,
+				EFB3411F230799B6003D8180 /* Assets.xcassets */,
 				EF75310722F52CC700B348EB /* GameViewController.swift */,
 				EF75310322F52CC700B348EB /* Actions.sks */,
 				EF7530FF22F52CC700B348EB /* AppDelegate.swift */,
 				EF75310922F52CC700B348EB /* Main.storyboard */,
 				EF75310E22F52CC800B348EB /* LaunchScreen.storyboard */,
 				EF75311122F52CC800B348EB /* Info.plist */,
-				EFB3410B23078C8D003D8180 /* sunset.jpg */,
 			);
 			path = "Time Trace";
 			sourceTree = "<group>";
@@ -274,17 +262,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFB3411D23079955003D8180 /* sunset.jpg in Resources */,
 				87A996DA230460E30024DF22 /* ObjectiveScreen.sks in Resources */,
-				EFB3410C23078C8D003D8180 /* sunset.jpg in Resources */,
 				EF75310B22F52CC700B348EB /* Main.storyboard in Resources */,
+				EFB34120230799B7003D8180 /* Assets.xcassets in Resources */,
 				EF75310222F52CC700B348EB /* GameScene.sks in Resources */,
 				87A996D623045C2C0024DF22 /* SettingsScreen.sks in Resources */,
-				EFB3411E23079955003D8180 /* space.jpg in Resources */,
-				EFB34104230776F4003D8180 /* map.jpg in Resources */,
 				EFDB5524230239CB00AAD9B3 /* GameOverScreen.sks in Resources */,
 				EFC8750C22FE75C500A7D8EC /* StartScreen.sks in Resources */,
-				EFB3411A23079327003D8180 /* simple.jpg in Resources */,
 				EF75311022F52CC800B348EB /* LaunchScreen.storyboard in Resources */,
 				EF75310422F52CC700B348EB /* Actions.sks in Resources */,
 			);
