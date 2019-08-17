@@ -199,7 +199,7 @@ class GameScene: SKScene {
             ghostArray[0].removeFromParent()
             ghostArray.remove(at: 0)
             currentAngle = Int.random(in: 0...360)
-            currentHeight = Int.random(in: 300...500)
+            currentHeight = Int.random(in: 375...500)
         }
     }
     
@@ -381,8 +381,8 @@ class GameScene: SKScene {
             count = 0
             clockTrue = true
             rectangleArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: fadeTimeSec),                                                         SKAction.removeFromParent()]))
-            if fadeTimeSec > 0.4 {
-                fadeTimeSec *= 0.98
+            if fadeTimeSec > 0.6 {
+                fadeTimeSec *= 0.99
             }
             score += 1
             scoreLabel?.text = String(score)
