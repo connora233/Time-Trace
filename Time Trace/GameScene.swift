@@ -52,7 +52,7 @@ class GameScene: SKScene {
     // Variable declaration for theme implementation.
     private var tempTheme : String? = ""
     private var colorTheme : String = "RAINBOW"
-    private var circleColor : UIColor = UIColor.lightGray
+    private var circleColor : UIColor = UIColor.white
     
     // Variable declaration for changing to GameOverScreen.
     let gameOverScreen = GameOverScreen(fileNamed: "GameOverScreen")
@@ -104,16 +104,10 @@ class GameScene: SKScene {
             colorTheme = tempTheme!
         }
         if colorTheme == "RAINBOW" {
-            circleColor = UIColor.lightGray
-            let background = SKSpriteNode(imageNamed: "simple")
-            background.position = CGPoint(x: 0, y: 0)
-            background.zPosition = 0
-            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
-            addChild(background)
+            backgroundColor = UIColor(red: 0.6667, green: 0.9529, blue: 1, alpha: 1.0)
             colorArray = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
         }
         if colorTheme == "SPACE" {
-            circleColor = UIColor.white
             let background = SKSpriteNode(imageNamed: "space")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
@@ -122,7 +116,6 @@ class GameScene: SKScene {
             colorArray = [UIColor(red: 0, green: 0.3961, blue: 0.6, alpha: 1.0), UIColor(red: 0, green: 0.4549, blue: 0.4784, alpha: 1.0), UIColor.white, UIColor(red: 0.8235, green: 0.7176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.6, green: 0.3176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.4235, green: 0.0078, blue: 0.9686, alpha: 1.0)]
         }
         if colorTheme == "SUNSET" {
-            circleColor = UIColor.white
             let background = SKSpriteNode(imageNamed: "sunset")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0

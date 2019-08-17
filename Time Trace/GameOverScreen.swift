@@ -20,7 +20,7 @@ class GameOverScreen: SKScene {
     // Variable declaration for theme implementation.
     private var tempTheme : String? = ""
     private var colorTheme : String = "RAINBOW"
-    private var buttonColor : UIColor = UIColor.lightGray
+    private var buttonColor : UIColor = UIColor.white
     
     // Variable declaration for initialization.
     private var currentRadius : CGFloat = 50
@@ -59,12 +59,7 @@ class GameOverScreen: SKScene {
             colorTheme = tempTheme!
         }
         if colorTheme == "RAINBOW" {
-            let background = SKSpriteNode(imageNamed: "simple")
-            background.position = CGPoint(x: 0, y: 0)
-            background.zPosition = 0
-            background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
-            addChild(background)
-            buttonColor = UIColor.lightGray
+            backgroundColor = UIColor(red: 0.6667, green: 0.9529, blue: 1, alpha: 1.0)
         }
         if colorTheme == "SPACE" {
             let background = SKSpriteNode(imageNamed: "space")
@@ -72,7 +67,6 @@ class GameOverScreen: SKScene {
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
             addChild(background)
-            buttonColor = UIColor.white
         }
         if colorTheme == "SUNSET" {
             let background = SKSpriteNode(imageNamed: "sunset")
@@ -80,7 +74,6 @@ class GameOverScreen: SKScene {
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
             addChild(background)
-            buttonColor = UIColor.white
         }
     }
     
