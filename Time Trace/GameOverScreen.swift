@@ -59,7 +59,7 @@ class GameOverScreen: SKScene {
             colorTheme = tempTheme!
         }
         if colorTheme == "RAINBOW" {
-            let background = SKSpriteNode(imageNamed: "map")
+            let background = SKSpriteNode(imageNamed: "simple")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
@@ -67,7 +67,7 @@ class GameOverScreen: SKScene {
             buttonColor = UIColor.lightGray
         }
         if colorTheme == "COOL" {
-            let background = SKSpriteNode(imageNamed: "map")
+            let background = SKSpriteNode(imageNamed: "space")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
@@ -75,7 +75,7 @@ class GameOverScreen: SKScene {
             buttonColor = UIColor.white
         }
         if colorTheme == "WARM" {
-            let background = SKSpriteNode(imageNamed: "map")
+            let background = SKSpriteNode(imageNamed: "sunset")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))

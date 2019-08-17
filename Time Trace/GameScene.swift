@@ -105,7 +105,7 @@ class GameScene: SKScene {
         }
         if colorTheme == "RAINBOW" {
             circleColor = UIColor.lightGray
-            let background = SKSpriteNode(imageNamed: "map")
+            let background = SKSpriteNode(imageNamed: "simple")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
@@ -114,7 +114,7 @@ class GameScene: SKScene {
         }
         if colorTheme == "COOL" {
             circleColor = UIColor.white
-            let background = SKSpriteNode(imageNamed: "map")
+            let background = SKSpriteNode(imageNamed: "space")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
@@ -123,7 +123,7 @@ class GameScene: SKScene {
         }
         if colorTheme == "WARM" {
             circleColor = UIColor.white
-            let background = SKSpriteNode(imageNamed: "map")
+            let background = SKSpriteNode(imageNamed: "sunset")
             background.position = CGPoint(x: 0, y: 0)
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
