@@ -23,7 +23,7 @@ class SettingsScreen: SKScene {
     private var colorArrayCounter : Int = 0
     private var colorArray1 : Array<UIColor> = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple]
     private var colorArray2 : Array<UIColor> = [UIColor(red: 0, green: 0.3961, blue: 0.6, alpha: 1.0), UIColor(red: 0, green: 0.4549, blue: 0.4784, alpha: 1.0), UIColor.white, UIColor(red: 0.8235, green: 0.7176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.6, green: 0.3176, blue: 0.9686, alpha: 1.0), UIColor(red: 0.4235, green: 0.0078, blue: 0.9686, alpha: 1.0)]
-    private var colorArray3 : Array<UIColor> = [UIColor(red: 0, green: 0.5804, blue: 0.698, alpha: 1.0), UIColor(red: 0, green: 0.7176, blue: 0.8784, alpha: 1.0), UIColor(red: 0.9294, green: 0.451, blue: 0.4157, alpha: 1.0), UIColor(red: 0.9373, green: 0.702, blue: 0.1098, alpha: 1.0), UIColor(red: 0.9373, green: 0.8588, blue: 0.3451, alpha: 1.0), UIColor(red: 0.9765, green: 0.9412, blue: 0.4392, alpha: 1.0)]
+    private var colorArray3 : Array<UIColor> = [UIColor(red: 0, green: 0.5804, blue: 0.698, alpha: 1.0), UIColor(red: 0, green: 0.7176, blue: 0.8784, alpha: 1.0), UIColor(red: 0.9686, green: 0.3647, blue: 0.3098, alpha: 1.0), UIColor.white, UIColor(red: 1, green: 0.5451, blue: 0.1961, alpha: 1.0), UIColor(red: 1, green: 0.9176, blue: 0.3176, alpha: 1.0)]
     
     // Variable declaration for button-related visuals.
     private var buttonPress : Int = 0

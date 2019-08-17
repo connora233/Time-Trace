@@ -121,7 +121,7 @@ class GameScene: SKScene {
             background.zPosition = 0
             background.scale(to: CGSize(width: screenWidth * 2, height: screenHeight * 2))
             addChild(background)
-            colorArray = [UIColor(red: 0, green: 0.5804, blue: 0.698, alpha: 1.0), UIColor(red: 0, green: 0.7176, blue: 0.8784, alpha: 1.0), UIColor(red: 0.9294, green: 0.451, blue: 0.4157, alpha: 1.0), UIColor(red: 0.9373, green: 0.702, blue: 0.1098, alpha: 1.0), UIColor(red: 0.9373, green: 0.8588, blue: 0.3451, alpha: 1.0), UIColor(red: 0.9765, green: 0.9412, blue: 0.4392, alpha: 1.0)]
+            colorArray = [UIColor(red: 0, green: 0.5804, blue: 0.698, alpha: 1.0), UIColor(red: 0, green: 0.7176, blue: 0.8784, alpha: 1.0), UIColor(red: 0.9686, green: 0.3647, blue: 0.3098, alpha: 1.0), UIColor.white, UIColor(red: 1, green: 0.5451, blue: 0.1961, alpha: 1.0), UIColor(red: 1, green: 0.9176, blue: 0.3176, alpha: 1.0)]
         }
     }
 
