@@ -15,5 +15,9 @@ The player's goal is to beat their current highscore by tracing as many pathways
 
 ## Tools Used:
 
-* Xcode
+* Xcode(Swift)
 * Figma
+
+## Future Plans
+
+We plan to publish the app on the Apple App Store in the coming weeks! Check back for a download link.
