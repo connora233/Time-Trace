@@ -12,7 +12,7 @@ import GameplayKit
 class StartScreen: SKScene {
     
     let gameScene = GameScene(fileNamed: "GameScene")
-
+    
     //------------------------------------VARIABLE DECLARATION------------------------------------
     
     // Variable declaration for general game constants.
@@ -47,6 +47,7 @@ class StartScreen: SKScene {
     private var gameStarted: Bool = false
     private var gameOver: Bool = true
     private var secondTouched: Bool = false
+    private var fadeTimeSec : Double = 0.5
     
     // Variable declaration for theme implementation.
     private var tempTheme : String? = ""
@@ -72,9 +73,7 @@ class StartScreen: SKScene {
         currentAngle = Int.random(in: 0...360)
         currentHeight = Int.random(in: 300...500)
         drawRect(newPoint: currentStartPoint, height: currentHeight, angle: currentAngle)
-        for _ in 1...2{
-            addPath()
-        }
+        addPath()
     }
     
     // Adjusts the background, button colors, and pathway colors based upon the theme selected in the settings.
@@ -112,18 +111,18 @@ class StartScreen: SKScene {
     
     //------------------------------------ANIMATION-RELATED FUCNTIONS------------------------------------
     
-    // Runs every frame to assist in the generation of the background animation. 
+    // Runs every frame to assist in the generation of the background animation.
     override func update(_ currentTime: TimeInterval) {
         drawLines()
     }
     
-    // Generates and controls the speed at which the background animation runs.
+    // Generates and controls the speed at which the background animation runs. Implements fading.
     func drawLines() {
-        if(delay % 15 == 0) {
-            addPath()
-            if(shapeArray.count > 3) {
-                shapeArray[0].removeFromParent()
+        if(delay % 10 == 0) {
+            if(shapeArray.count > 1) {
+                shapeArray[0].run(SKAction.sequence([SKAction.fadeOut(withDuration: fadeTimeSec),                                                         SKAction.removeFromParent()]))
                 shapeArray.remove(at: 0)
+                addPath()
             }
         }
         delay += 1
@@ -242,7 +241,7 @@ class StartScreen: SKScene {
         shape.zRotation = CGFloat(radians)
     }
     
-    // Draws a pre-stylized button at a specified y-coordinate. 
+    // Draws a pre-stylized button at a specified y-coordinate.
     func drawButton(yCord: CGFloat){
         let button = SKShapeNode()
         button.path = UIBezierPath(roundedRect: CGRect(x: -200, y: yCord, width: 400, height: 200), cornerRadius: currentRadius).cgPath
@@ -282,7 +281,7 @@ class StartScreen: SKScene {
         }
     }
     
-    // Registers the point of contact where the user first touches the screen. 
+    // Registers the point of contact where the user first touches the screen.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
